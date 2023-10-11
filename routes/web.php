@@ -16,9 +16,23 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+use Stichoza\GoogleTranslate\GoogleTranslate;
+
+Route::get('/translate', function (){
+    $translator = new GoogleTranslate();
+    $translator->setSource('en'); // Исходный язык
+    $translator->setTarget('ky'); // Целевой язык
+
+    $translatedText = $translator->translate('Hello, world!');
+    return $translatedText;
+});
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::get('/', [IndexController::class, 'index'])->name('admin.index');
     Route::get('/squid2', [SQuid2Controller::class, 'index'])->name('admin.squid2.index');
+    Route::get('/get/data', [SQuid2Controller::class, 'getData'])->name('getdata');
+    Route::post('/translate', [SQuid2Controller::class, 'translate'])->name('translate');
 });
 
 

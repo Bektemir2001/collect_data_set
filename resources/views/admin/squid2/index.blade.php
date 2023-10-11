@@ -20,22 +20,19 @@
                         <table id="datatable-1" class="table data-table table-striped table-bordered" >
                             <thead>
                             <tr>
-                                <th>Title</th>
-                                <th class="text-right">paragraphs</th>
+                                <th>NUM</th>
+                                <th>ORIGINAL</th>
+                                <th class="text-right">Translate</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach($data['data'] as $item)
-                            <tr>
-                                <td>{{$item['title']}}</td>
-                                <td class="text-right">{{count($item['paragraphs'])}}</td>
-                            </tr>
-                            @endforeach
+                            <tbody id="tableId">
+
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Title</th>
-                                <th class="text-right">paragraphs</th>
+                                <th>NUM</th>
+                                <th>ORIGINAL</th>
+                                <th class="text-right">Translate</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -45,5 +42,59 @@
         </div>
     </div>
 
+    <script>
+        function afterDelay() {
+            console.log("Задержка завершена");
+        }
+        let data_csv;
+        let url = "{{route('getdata')}}";
+        fetch(url, {
+            headers: {
+                'X-CSRF-TOKEN': "{{csrf_token()}}"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                data_csv = data['data'];
+                getTranslate();
+            });
+
+        function getTranslate()
+        {
+            let table = document.getElementById('tableId');
+            url = "{{route('translate')}}";
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            (async () => {
+                // Начало цикла
+                for (let i = 6995; i < data_csv.length; i++) {
+                    console.log(`Итерация ${i}`);
+
+                    let a = new FormData()
+                    a.append('text', data_csv[i]);
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': "{{csrf_token()}}"
+                        },
+                        body: a
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+
+                        });
+
+                    await sleep(500);
+                    if(i % 5 === 0){
+                        await sleep(2000);
+                    }
+
+                }
+            })();
+        }
+
+    </script>
 @endsection
 
