@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('question_answers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('context_id');
+            $table->text('question');
+            $table->text('answer');
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
             $table->timestamps();
+
+            $table->index('context_id', 'context_answer_question_idx');
+            $table->foreign('context_id', 'context_answer_question_fk')
+                ->on('contexts')
+                ->references('id')
+                ->cascadeOnDelete();
         });
     }
 

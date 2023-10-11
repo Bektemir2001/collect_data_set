@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contexts', function (Blueprint $table) {
+        Schema::create('uploaded_files', function (Blueprint $table) {
             $table->id();
-            $table->text('context');
-            $table->string('title')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->unsignedBigInteger('file_id')->nullable();
+            $table->string('path')->unique();
+            $table->unsignedBigInteger('uploaded_by');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contexts');
+        Schema::dropIfExists('uploaded_files');
     }
 };
