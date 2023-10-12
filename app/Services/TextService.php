@@ -18,18 +18,13 @@ class TextService
             $tmp = explode("\n", $text['text']);
             for($i = 0; $i < count($tmp)-1; $i++)
             {
-                if(strlen($tmp[$i]) < 4) continue;
-                if($tmp[$i][0] == 'Q' && $tmp[$i][2] == ':' && $tmp[$i+1][0] == 'A' && $tmp[$i+1][2] == ':')
+                if(strlen($tmp[$i]) < 4 || strlen($tmp[$i + 1]) < 4) continue;
+                if($tmp[$i][0] == 'Q'  && $tmp[$i+1][0] == 'A')
                 {
-//                    $q = [
-//                        'question' => substr($tmp[$i], 4),
-//                        'answer' => substr($tmp[$i+1], 4)
-//                    ];
-//                    array_push($results, $q);
-                    $question = $this->translateService->translate(substr($tmp[$i], 4), 'EN', 'KG');
+                    $question = $this->translateService->translate($tmp[$i], 'EN', 'KG');
                     if($question['code'] == 200)
                     {
-                        $answer = $this->translateService->translate(substr($tmp[$i+1], 4), 'EN', 'KG');
+                        $answer = $this->translateService->translate($tmp[$i+1], 'EN', 'KG');
                         if($answer['code'] == 200){
                             $q = [
                                 'question' => $question['result'],

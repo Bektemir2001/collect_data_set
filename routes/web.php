@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'questions'], function (){
         Route::post('/update', [QuestionAnswerController::class, 'update'])->name('question.update');
+        Route::post('/store', [QuestionAnswerController::class, 'store'])->name('question.store');
         Route::post('/auto/generate', [QuestionAnswerController::class, 'autoGenerate'])->name('question.autogenerate');
     });
 

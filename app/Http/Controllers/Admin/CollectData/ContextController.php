@@ -43,6 +43,8 @@ class ContextController extends Controller
 
     public function show(Context $context)
     {
-        return view('admin.context.show', compact('context'));
+        $context_text = html_entity_decode(strip_tags($context->context));
+        $context_text = str_replace(array("\n", "\t", "\r", "\u{A0}"), '', $context_text);
+        return view('admin.context.show', compact('context', 'context_text'));
     }
 }

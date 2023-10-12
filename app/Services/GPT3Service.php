@@ -25,7 +25,6 @@ class GPT3Service
             ],
         ]);
         $responseData = json_decode($response->getBody(), true);
-
         return $this->textService->forGptResponse($responseData['choices']);
     }
 
