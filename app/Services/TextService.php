@@ -37,6 +37,7 @@ class TextService
                                 ];
                             array_push($results, $q);
                         }
+
                     }
 
                 }
