@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Edit Context</h4>
+                <h4 class="card-title">Context</h4>
             </div>
             <div class="header-action">
                 <i data-toggle="collapse" data-target="#form-element-6" aria-expanded="false" class="collapsed">
@@ -28,21 +28,26 @@
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title" required autofocus>
+                    <input type="text" class="form-control" id="title" value="{{$context->title}}" name="title" required autofocus>
                     @error('title')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="context">Context</label>
-                    <textarea id="context" name="context"></textarea>
+                    <textarea id="context" name="context">{!! $context->context !!}</textarea>
                     @error('context')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                <button type="submit" class="btn bg-danger">Cancel</button>
+
+                <div class="mb-4 mt-4" style="margin-left: 80%">
+                    <button type="submit" class="btn btn-primary mr-2">Save changes</button>
+                    <a type="submit" class="btn bg-danger">Cancel</a>
+                </div>
+
             </form>
+            @include('includes.question_generate')
         </div>
     </div>
 @endsection

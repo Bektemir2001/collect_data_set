@@ -11,7 +11,7 @@ class GPT3Service
         $this->textService = $textService;
     }
 
-    public function generateQuestionAndAnswer($text, $amount):array
+    public function generateQuestionAndAnswer($text):array
     {
         $client = new Client();
         $response = $client->post('https://api.openai.com/v1/engines/text-davinci-003/completions', [
@@ -19,7 +19,7 @@ class GPT3Service
                 'Authorization' => 'Bearer '.env('GPT_KEY'),
             ],
             'json' => [
-                'prompt' => "Generate $amount questions and answers based on the following text: $text",
+                'prompt' => "Generate questions and answers based on the following text: $text",
                 'max_tokens' => 1000,
                 'temperature' => 0.7,
             ],

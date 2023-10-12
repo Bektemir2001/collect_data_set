@@ -23,8 +23,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'context' => 'required',
-            'auto_generate_questions' => 'required'
+            'context' => 'required'
         ];
     }
 }

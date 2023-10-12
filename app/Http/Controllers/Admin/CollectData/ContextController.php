@@ -31,20 +31,18 @@ class ContextController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $text = $data['context'];
-        $text = str_replace(array("\n", "\t"), '', $text);
-        Scout::initialize();
-        Scout::createIndexForModel(Context::class);
-        $question = new Context();
-        $question->context = $data['context'];
-        $question->title = $data['title'];
-        $question->save();
-        dd(strlen($text), strlen($data['context']));
-//        $questions = $this->GPT3Service->generateQuestionAndAnswer($data['context'], 10);
+        $data['created_by'] = auth()->user()->id;
+        $context = Context::create($data);
+        return redirect()->route('context.show', $context->id);
     }
 
     public function generateQuestionAndAnswer(Context $context)
     {
-        dd($this->GPT3Service->generateQuestionAndAnswer($context->context, 5));
+        dd($this->GPT3Service->generateQuestionAndAnswer($context->context));
+    }
+
+    public function show(Context $context)
+    {
+        return view('admin.context.show', compact('context'));
     }
 }

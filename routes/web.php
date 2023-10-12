@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CollectData\ContextController;
+use App\Http\Controllers\Admin\CollectData\QuestionAnswerController;
 use App\Http\Controllers\Admin\CollectData\UploadController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\SQuid2Controller;
@@ -40,7 +41,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::group(['prefix' => 'contexts'], function (){
         Route::get('/', [ContextController::class, 'index'])->name('context.index');
         Route::get('/create', [ContextController::class, 'create'])->name('context.create');
+        Route::get('/{context}', [ContextController::class, 'show'])->name('context.show');
+
         Route::post('/', [ContextController::class, 'store'])->name('context.store');
+    });
+
+    Route::group(['prefix' => 'questions'], function (){
+        Route::post('/update', [QuestionAnswerController::class, 'update'])->name('question.update');
+        Route::post('/auto/generate', [QuestionAnswerController::class, 'autoGenerate'])->name('question.autogenerate');
     });
 
     Route::group(['prefix' => 'csv'], function (){

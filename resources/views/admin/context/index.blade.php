@@ -37,10 +37,10 @@
                                     <tr>
                                         <td>{{$context->id}}</td>
                                         <td>{{$context->title}}</td>
-                                        <td>{{Str::limit($context->context, 150)}}</td>
+                                        <td>{!! Str::limit($context->context, 150)!!}</td>
                                         <td>{{count($context->questions)}}</td>
                                         <td>
-                                            <button class="btn btn-primary">show</button>
+                                            <a href="{{route('context.show', $context->id)}}" class="btn btn-primary">show</a>
                                         </td>
                                     </tr>
                                 @endforeach
