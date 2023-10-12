@@ -39,6 +39,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'contexts'], function (){
         Route::get('/', [ContextController::class, 'index'])->name('context.index');
+        Route::get('/create', [ContextController::class, 'create'])->name('context.create');
+        Route::post('/', [ContextController::class, 'store'])->name('context.store');
     });
 
     Route::group(['prefix' => 'csv'], function (){

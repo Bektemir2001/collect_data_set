@@ -15,8 +15,13 @@
                         </i>
                     </div>
                 </div>
+
                 <div class="card-body">
+
                     <div class="table-responsive">
+                        <div class="mb-4 mt-4">
+                            <a href="{{route('context.create')}}" class="btn btn-success">add</a>
+                        </div>
                         <table id="datatable-1" class="table data-table table-striped table-bordered" >
                             <thead>
                             <tr>
@@ -28,7 +33,17 @@
                             </tr>
                             </thead>
                             <tbody id="tableId">
-
+                                @foreach($contexts as $context)
+                                    <tr>
+                                        <td>{{$context->id}}</td>
+                                        <td>{{$context->title}}</td>
+                                        <td>{{Str::limit($context->context, 150)}}</td>
+                                        <td>{{count($context->questions)}}</td>
+                                        <td>
+                                            <button class="btn btn-primary">show</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
