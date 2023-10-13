@@ -1,9 +1,9 @@
 <div class="iq-sidebar  sidebar-default  ">
     <div class="iq-sidebar-logo d-flex align-items-end justify-content-between">
         <a href="../backend/index.html" class="header-logo">
-            <img src="../assets/images/logo.png" class="img-fluid rounded-normal light-logo" alt="logo">
-            <img src="../assets/images/logo-dark.png" class="img-fluid rounded-normal d-none sidebar-light-img" alt="logo">
-            <span>Datum</span>
+            <img src="{{asset('admin_files/assets/images/img.png')}}" class="img-fluid rounded-normal light-logo" alt="logo">
+            <img src="{{asset('admin_files/assets/images/img.png')}}" class="img-fluid rounded-normal d-none sidebar-light-img" alt="logo">
+            <span></span>
         </a>
         <div class="side-menu-bt-sidebar-1">
             <svg xmlns="http://www.w3.org/2000/svg" class="text-light wrapper-menu" width="30" fill="none" viewBox="0 0 24 24" stroke="currentColor">

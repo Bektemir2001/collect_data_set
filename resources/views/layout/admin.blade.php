@@ -7,7 +7,7 @@
     <title>Collect Data</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="../../../public/assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{asset('admin_files/assets/images/img.png')}}" />
 
     <link rel="stylesheet" href="{{asset('admin_files/assets/css/backend-plugin.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_files/assets/css/backend.css?v=1.0.0')}}">

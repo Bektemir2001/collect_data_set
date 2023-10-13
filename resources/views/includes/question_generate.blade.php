@@ -30,6 +30,7 @@
     let count_of_questions = {{count($context->questions)}};
     let un_saved_questions = [];
     let current_context_array = splitTextIntoChunks(`{{$context_text}}`, 2500);
+    console.log(current_context_array);
     function updateQuestion(question_id)
     {
         let question = document.getElementById(`question${question_id}`);

@@ -13,7 +13,6 @@ class UploadController extends Controller
 {
     public function CSV(Request $request)
     {
-//        dd($data);
         if ($request->hasFile('csv_file')) {
             $file = $request->file('csv_file');
             $path = $file->store('data', 'public');
