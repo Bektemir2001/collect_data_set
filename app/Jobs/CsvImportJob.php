@@ -39,12 +39,12 @@ class CsvImportJob implements ShouldQueue
         $data = [];
 
         foreach ($results as $record) {
-            if (!isset($record['title']) || !isset($record['context'])) {
+            if (!isset($record['Title']) || !isset($record['Text'])) {
                 continue;
             }
             $data[] = [
-                'title' => $record['title'],
-                'context' => $record['context'],
+                'title' => $record['Title'],
+                'context' => $record['Text'],
                 'created_by' => $this->user
             ];
 

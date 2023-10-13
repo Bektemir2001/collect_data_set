@@ -58,7 +58,7 @@
                         <form action="{{route('upload.csv')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div style="display: flex">
-                                <input class="form-control" name="csv_file" type="file" style="width: 60%;" accept=".csv"/>
+                                <input class="form-control" id="csv_file" name="csv_file" type="file" style="width: 60%;"/>
                                 <button type="submit" class="btn btn-primary">upload csv</button>
                             </div>
 
