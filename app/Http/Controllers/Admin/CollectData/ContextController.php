@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\CollectData;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Context\StoreRequest;
+use App\Http\Requests\Admin\Context\UpdateRequest;
 use App\Models\Context;
 use App\Services\GPT3Service;
 use Illuminate\Http\Request;
@@ -36,16 +37,18 @@ class ContextController extends Controller
         return redirect()->route('context.show', $context->id);
     }
 
-    public function generateQuestionAndAnswer(Context $context)
+    public function update(UpdateRequest $request, Context $context)
     {
-        dd($this->GPT3Service->generateQuestionAndAnswer($context->context));
+        $data = $request->validated();
+        $data['updated_by'] = auth()->user()->id;
+        $context->update($data);
+        return redirect()->route('context.show', $context->id)->with(['notification' => 'context successfully updated']);
     }
 
     public function show(Context $context)
     {
         $context_text = html_entity_decode(strip_tags($context->context));
         $context_text = str_replace(array("\n", "\t", "\r", "\u{A0}", '"', "'"), '', $context_text);
-
         return view('admin.context.show', compact('context', 'context_text'));
     }
 }

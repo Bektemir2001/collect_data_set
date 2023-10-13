@@ -24,7 +24,7 @@
         <div class="card-body">
             <div class="collapse" id="form-element-6" style="">
             </div>
-            <form action="{{route('context.store')}}" method="POST">
+            <form action="{{route('context.update', $context->id)}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -43,7 +43,7 @@
 
                 <div class="mb-4 mt-4" style="margin-left: 80%">
                     <button type="submit" class="btn btn-primary mr-2">Save changes</button>
-                    <a type="submit" class="btn bg-danger">Cancel</a>
+                    <a type="submit" href="{{route('context.index')}}" class="btn bg-danger">Back</a>
                 </div>
 
             </form>

@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::get('/{context}', [ContextController::class, 'show'])->name('context.show');
 
         Route::post('/', [ContextController::class, 'store'])->name('context.store');
+        Route::post('/update/{context}', [ContextController::class, 'update'])->name('context.update');
     });
 
     Route::group(['prefix' => 'questions'], function (){

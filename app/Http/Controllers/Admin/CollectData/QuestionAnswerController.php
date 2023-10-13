@@ -26,7 +26,10 @@ class QuestionAnswerController extends Controller
             'question' => 'required'
         ]);
         try{
-            QuestionAnswer::where('id', $data['question_id'])->update(['answer' => $data['answer'], 'question' => $data['question']]);
+            QuestionAnswer::where('id', $data['question_id'])->update([
+                'answer' => $data['answer'],
+                'question' => $data['question'],
+                'updated_by' => auth()->user()->id]);
             return response(['data' => 'question successfully updated']);
         }
         catch (Exception $e)
