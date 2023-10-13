@@ -16,6 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('context_id');
             $table->text('question');
             $table->text('answer');
+            $table->text('original_question')->nullable();
+            $table->text('original_answer')->nullable();
+            $table->string('lang')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

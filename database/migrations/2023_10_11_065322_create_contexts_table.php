@@ -19,6 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('file_id')->nullable();
             $table->string('link')->nullable();
+            $table->string('original_title')->nullable();
+            $table->longText('original_context')->nullable();
+            $table->string('lang')->nullable();
             $table->timestamps();
         });
     }

@@ -32,8 +32,7 @@ class CsvImportJob implements ShouldQueue
         $csv->setHeaderOffset(0);
         $csv->setDelimiter($this->delimiter);
         $statement = (new Statement())
-            ->offset(0)
-            ->limit(10);
+            ->offset(0);
         $results = $statement->process($csv);
         $batchSize = 1000;
         $data = [];
