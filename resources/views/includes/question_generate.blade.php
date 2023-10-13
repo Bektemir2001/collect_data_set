@@ -1,7 +1,7 @@
 <div>
     <div id="questions_id">
         @foreach($context->questions as $question)
-            <div class="card">
+            <div class="card" id="{{'card'.$question->id}}">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
                         <h4 class="card-title">{{'Question '.$loop->iteration}}</h4>
@@ -16,8 +16,8 @@
                             <label for="answer{{$question->id}}">answer:</label>
                             <textarea class="form-control" id="answer{{$question->id}}">{{$question->answer}}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary mr-2" onclick="updateQuestion({{$question->id}})">Update</button>
-                        <button type="submit" class="btn bg-danger">Remove</button>
+                        <button type="button" class="btn btn-primary mr-2" onclick="updateQuestion({{$question->id}})">Update</button>
+                        <button type="button" class="btn bg-danger" onclick="removeQuestion({{$question->id}})">Remove</button>
                 </div>
             </div>
         @endforeach
@@ -37,6 +37,22 @@
         let answer = document.getElementById(`answer${question_id}`);
         if(question.value !== '' && answer.value !== '')
         {
+            let url = "{{route('question.update')}}";
+            let data = new FormData()
+            data.append('answer', answer.value);
+            data.append('question', question.value);
+            data.append('question_id', question_id);
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': "{{csrf_token()}}"
+                },
+                body: data
+            })
+                .then(response => response.json())
+                .then(res => {
+                        alert(res.data);
+                });
             console.log(question.value);
             console.log(answer.value);
         }
@@ -61,13 +77,14 @@
     }
     function addQuestion()
     {
+        count_of_questions += 1;
         let newElement = document.createElement("div");
         newElement.className = 'card';
+        newElement.id = 'cardNew' + count_of_questions;
         let div = document.getElementById("questions_id");
-        count_of_questions += 1;
         newElement.innerHTML = `<div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">Question${count_of_questions}</h4>
+                        <h4 class="card-title">Question ${count_of_questions}</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -80,7 +97,7 @@
                             <input type="text" class="form-control" id="answerNew${count_of_questions}">
                         </div>
                         <button type="button" class="btn btn-success mr-2" id="newButton${count_of_questions}" onclick="saveQuestion(${count_of_questions})">Save</button>
-                        <button type="submit" class="btn bg-danger">Remove</button>
+                        <button type="button" class="btn bg-danger" id="newRemoveButton${count_of_questions}" onclick="removeQuestion(${count_of_questions}, true)">Remove</button>
                 </div>`;
         div.appendChild(newElement);
     }
@@ -105,11 +122,13 @@
                 .then(res => {
                     res = res.data;
                     let button = document.getElementById(`newButton${question_id}`);
-                    button.innerHTML = 'Update';
-                    button.onclick = `updateQuestion(${res.id})`;
-                    button.className = 'btn btn-primary mr-2';
+                    button.outerHTML = `<button type="button" class="btn btn-primary mr-2" onclick="updateQuestion(${res.id})">Update</button>`
+                    let removeButton = document.getElementById(`newRemoveButton${question_id}`);
+                    removeButton.outerHTML = `<button type="button" class="btn bg-danger" onclick="removeQuestion(${res.id})">Remove</button>`;
                     question.id = `question${res.id}`;
                     answer.id = `answer${res.id}`;
+                    let card = document.getElementById(`cardNew${question_id}`);
+                    card.id = `card${res.id}`;
                     console.log(res);
                 });
             console.log(question_id);
@@ -174,4 +193,46 @@
                 </div>`;
         div.appendChild(newElement);
     }
+
+    function removeQuestion(question_id, is_new=false)
+    {
+        console.log('click')
+        if(is_new)
+        {
+            document.getElementById('cardNew'+question_id).outerHTML = '';
+            count_of_questions -= 1;
+        }
+        else{
+            url = "{{route('question.remove')}}";
+            let data = new FormData();
+            data.append('question_id', question_id);
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': "{{csrf_token()}}"
+                },
+                body: data
+            })
+                .then(response => response.json())
+                .then(res => {
+                    if(res.code === 200)
+                    {
+                        count_of_questions -= 1;
+                        alert(res.data);
+                        document.getElementById('card'+question_id).outerHTML = '';
+                        let div = document.getElementById('questions_id');
+                        let divs = div.children;
+                        for(let i = 0; i < divs.length; i++){
+                            divs[i].children[0].children[0].children[0].innerHTML = 'Question ' + (i+1);
+                        }
+                    }
+                    else{
+                        alert(res.data);
+                    }
+                });
+        }
+
+    }
+
+
 </script>

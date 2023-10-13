@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Context;
 use App\Models\QuestionAnswer;
 use App\Services\GPT3Service;
+use Exception;
 use Illuminate\Http\Request;
 
 class QuestionAnswerController extends Controller
@@ -17,8 +18,21 @@ class QuestionAnswerController extends Controller
         $this->GPT3Service = $GPT3Service;
     }
 
-    public function update()
+    public function update(Request $request)
     {
+        $data = $request->validate([
+            'question_id' => 'required',
+            'answer' => 'required',
+            'question' => 'required'
+        ]);
+        try{
+            QuestionAnswer::where('id', $data['question_id'])->update(['answer' => $data['answer'], 'question' => $data['question']]);
+            return response(['data' => 'question successfully updated']);
+        }
+        catch (Exception $e)
+        {
+            return response(['data' => $e->getMessage(), 'code' => 500]);
+        }
 
     }
 
@@ -55,5 +69,19 @@ class QuestionAnswerController extends Controller
             array_push($result, $question);
         }
         return response(['data' => $result]);
+    }
+
+    public function remove(Request $request)
+    {
+        try{
+            $data = $request->validate(['question_id' => 'required']);
+            QuestionAnswer::where('id', $data['question_id'])->delete();
+            return response(['data' => 'success', 'code'=>200]);
+        }
+        catch (Exception $e)
+        {
+            return response(['data' => $e->getMessage(), 'code' => 500]);
+        }
+
     }
 }

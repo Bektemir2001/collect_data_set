@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::post('/update', [QuestionAnswerController::class, 'update'])->name('question.update');
         Route::post('/store', [QuestionAnswerController::class, 'store'])->name('question.store');
         Route::post('/auto/generate', [QuestionAnswerController::class, 'autoGenerate'])->name('question.autogenerate');
+        Route::post('/remove', [QuestionAnswerController::class, 'remove'])->name('question.remove');
     });
 
     Route::group(['prefix' => 'csv'], function (){
