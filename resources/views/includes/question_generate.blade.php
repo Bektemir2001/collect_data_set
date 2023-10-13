@@ -110,9 +110,7 @@
                     button.className = 'btn btn-primary mr-2';
                     question.id = `question${res.id}`;
                     answer.id = `answer${res.id}`;
-                    console.log(res);
                 });
-            console.log(question_id);
         }
         else{
             alert('empty question or answer');
@@ -173,5 +171,13 @@
                         <button type="submit" class="btn bg-danger">Remove</button>
                 </div>`;
         div.appendChild(newElement);
+    }
+
+    function removeQuestion(question_id, is_new=false)
+    {
+        if(is_new)
+        {
+
+        }
     }
 </script>
