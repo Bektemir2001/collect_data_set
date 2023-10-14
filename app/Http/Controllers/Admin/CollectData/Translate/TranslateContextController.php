@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\CollectData\Translate;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\CsvImportAndTraslateJob;
+use App\Jobs\CsvImportAndTranslateJob;
 use App\Models\Context;
 use Illuminate\Http\Request;
 use League\Csv\Reader;
@@ -20,7 +20,6 @@ class TranslateContextController extends Controller
     public function uploadCSV(Request $request)
     {
         if ($request->hasFile('csv_file')) {
-            dd(ini_get('max_execution_time'));
             $data = $request->validate(['source_lang' => 'required']);
             $file = $request->file('csv_file');
             $path = $file->store('data', 'public');
@@ -43,12 +42,12 @@ class TranslateContextController extends Controller
                 $csv->setDelimiter($delimiter);
                 $statement = (new Statement())
                     ->offset(0)
-                    ->limit(2000);
+                    ->limit(10);
                 $results = $statement->process($csv);
                 $headers = $results->getHeader();
                 if(in_array('context', $headers) && in_array('question', $headers) && in_array('answers', $headers))
                 {
-                    CsvImportAndTraslateJob::dispatch(storage_path('app/public/' . $path), $delimiter, auth()->user()->id, $data['source_lang']);
+                    CsvImportAndTranslateJob::dispatch(storage_path('app/public/' . $path), $delimiter, auth()->user()->id, $data['source_lang']);
                     return redirect()->route('context.translate.index')->with(['notification' => 'Данные успешно импортированы.']);
                 }
                 return redirect()->route('context.translate.index')->with(['notification' => 'CSV файл должен содержать поля "context" , "question" и "answers".']);

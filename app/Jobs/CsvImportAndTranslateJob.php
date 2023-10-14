@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 use League\Csv\Statement;
 
-class CsvImportAndTraslateJob implements ShouldQueue
+class CsvImportAndTranslateJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -88,11 +88,9 @@ class CsvImportAndTraslateJob implements ShouldQueue
                         'lang' => $this->source_lang
                     ]
                 );
-                sleep(1);
             }
-            sleep(1);
-            if($i % 5 == 0){
-                sleep(2);
+            if($i % 9 == 0){
+                sleep(1);
             }
             $i += 1;
         }
