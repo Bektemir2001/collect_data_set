@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\CsvImportAndTranslateJob;
 use App\Models\Context;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 use League\Csv\Statement;
 
@@ -13,6 +14,16 @@ class TranslateContextController extends Controller
 {
     public function index()
     {
+        $jobs = DB::table('jobs')->get();
+        foreach ($jobs as $job)
+        {
+            $payload = json_decode($job->payload);
+            if($payload->displayName == "App\\Jobs\\CsvImportAndTranslateJob")
+            {
+                \session()->flash('notification', 'Данные успешно импортируется.');
+                break;
+            }
+        }
         $contexts = Context::where('lang', '!=', null)->get();
         return view('admin.context.translate.index', compact('contexts'));
     }
@@ -48,7 +59,7 @@ class TranslateContextController extends Controller
                 if(in_array('context', $headers) && in_array('question', $headers) && in_array('answers', $headers))
                 {
                     CsvImportAndTranslateJob::dispatch(storage_path('app/public/' . $path), $delimiter, auth()->user()->id, $data['source_lang']);
-                    return redirect()->route('context.translate.index')->with(['notification' => 'Данные успешно импортированы.']);
+                    return redirect()->route('context.translate.index')->with(['notification' => 'Данные успешно импортируется.']);
                 }
                 return redirect()->route('context.translate.index')->with(['notification' => 'CSV файл должен содержать поля "context" , "question" и "answers".']);
             } else {
