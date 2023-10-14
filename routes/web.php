@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CollectData\ContextController;
+use App\Http\Controllers\Admin\CollectData\Export\ExportQuestionController;
 use App\Http\Controllers\Admin\CollectData\QuestionAnswerController;
 use App\Http\Controllers\Admin\CollectData\Translate\TranslateContextController;
 use App\Http\Controllers\Admin\CollectData\UploadController;
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'csv'], function (){
         Route::post('/upload', [UploadController::class, 'CSV'])->name('upload.csv');
+        Route::post('/export/questions', [ExportQuestionController::class, 'csv'])->name('export.questions');
     });
 });
 

@@ -22,6 +22,7 @@
                         <div class="mb-4 mt-4">
                             <a href="{{route('context.create')}}" class="btn btn-success">add</a>
                         </div>
+                        @include('includes.question_csv_export')
                         <table id="datatable-1" class="table data-table table-striped table-bordered" >
                             <thead>
                             <tr>
