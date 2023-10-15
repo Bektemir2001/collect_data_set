@@ -28,28 +28,7 @@
                 <li class="px-3 pt-3 pb-2">
                     <span class="text-uppercase small font-weight-bold">Pages</span>
                 </li>
-                <li class=" sidebar-layout">
-                    <a href="../app/user-profile.html" class="svg-icon">
-                        <i class="">
-                            <svg class="svg-icon" id="iq-user-1-1" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </i><span class="ml-2">User Profile</span>
-                    </a>
-                </li>
 
-                <li class=" sidebar-layout">
-                    <a href="{{route('admin.squid2.index')}}" class="svg-icon">
-                        <i class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-                            </svg>
-
-                        </i><span class="ml-2">SQuid2</span>
-                    </a>
-                </li>
                 <li class=" sidebar-layout">
                     <a href="{{route('context.index')}}" class="svg-icon">
                         <i class="">
