@@ -7,11 +7,16 @@
             plugins: 'autolink lists link image charmap print preview',
             toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
         });
+        tinymce.init({
+            selector: '#original_context',  // Задайте селектор для элемента, в котором вы хотите использовать редактор
+            plugins: 'autolink lists link image charmap print preview',
+            toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        });
     </script>
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Context</h4>
+                <h4 class="card-title">Translated Context</h4>
             </div>
             <div class="header-action">
                 <i data-toggle="collapse" data-target="#form-element-6" aria-expanded="false" class="collapsed">
@@ -27,11 +32,19 @@
             <form action="{{route('context.update', $context->id)}}" method="POST">
                 @csrf
                 <div class="form-group">
+                    <label for="original_title">Original Title</label>
+                    <input type="text" class="form-control" id="original_title" value="{{$context->original_title}}">
+                </div>
+                <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" value="{{$context->title}}" name="title" required autofocus>
                     @error('title')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
+                </div>
+                <div class="form-group">
+                    <label for="original_context">Original Context</label>
+                    <textarea id="original_context">{!! $context->original_context !!}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="context">Context</label>
@@ -46,10 +59,10 @@
                         <a type="submit" href="{{route('context.index', $previous_context)}}" class="btn bg-danger">Previous</a>
                     @endif
 
-                        <button type="submit" class="btn btn-primary mr-2">Save changes</button>
+                    <button type="submit" class="btn btn-primary mr-2">Save changes</button>
 
                     @if($next_context)
-                            <a type="submit" href="{{route('context.show', $next_context)}}" class="btn bg-success">Next</a>
+                        <a type="submit" href="{{route('context.show', $next_context)}}" class="btn bg-success">Next</a>
                     @endif
 
 

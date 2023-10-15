@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">Contexts</h4>
+                        <h4 class="card-title">Translated Contexts</h4>
                     </div>
                     <div class="header-action">
                         <i data-toggle="collapse" data-target="#datatable-1" aria-expanded="false">
@@ -41,7 +41,7 @@
                                     <td>{!! Str::limit($context->context, 150)!!}</td>
                                     <td>{{count($context->questions)}}</td>
                                     <td>
-                                        <a href="{{route('context.show', $context->id)}}" class="btn btn-primary">show</a>
+                                        <a href="{{route('context.translate.show', $context->id)}}" class="btn btn-primary">show</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -8,7 +8,19 @@
                     </div>
                 </div>
                 <div class="card-body">
+                        @if($question->original_question)
                         <div class="form-group">
+                            <label for="original_question{{$question->id}}">original question:</label>
+                            <input type="text" class="form-control" id="original_question{{$question->id}}" value="{{$question->original_question}}">
+                        </div>
+                        @endif
+                        @if($question->original_answer)
+                                <div class="form-group">
+                                    <label for="original_answer{{$question->id}}">original answer:</label>
+                                    <textarea class="form-control" id="original_answer{{$question->id}}">{{$question->original_answer}}</textarea>
+                                </div>
+                            @endif
+                            <div class="form-group">
                             <label for="question{{$question->id}}">question:</label>
                             <input type="text" class="form-control" id="question{{$question->id}}" value="{{$question->question}}">
                         </div>

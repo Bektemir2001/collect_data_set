@@ -49,6 +49,8 @@ class ContextController extends Controller
     {
         $context_text = html_entity_decode(strip_tags($context->context));
         $context_text = str_replace(array("\n", "\t", "\r", "\u{A0}", '"', "'"), '', $context_text);
-        return view('admin.context.show', compact('context', 'context_text'));
+        $next_context = Context::where('id', '>', $context->id)->min('id');
+        $previous_context = Context::where('id', '<', $context->id)->max('id');
+        return view('admin.context.show', compact('context', 'context_text', 'next_context', 'previous_context'));
     }
 }

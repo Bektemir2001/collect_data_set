@@ -72,4 +72,16 @@ class TranslateContextController extends Controller
         }
     }
 
+    public function show(Context $context)
+    {
+        $context_text = html_entity_decode(strip_tags($context->context));
+        $context_text = str_replace(array("\n", "\t", "\r", "\u{A0}", '"', "'"), '', $context_text);
+        $next_context = Context::where('id', '>', $context->id)
+            ->where('lang', '!=', null)
+            ->min('id');
+        $previous_context = Context::where('id', '<', $context->id)
+            ->where('lang', '!=', null)
+            ->max('id');
+        return view('admin.context.translate.show', compact('context', 'context_text', 'next_context', 'previous_context'));
+    }
 }

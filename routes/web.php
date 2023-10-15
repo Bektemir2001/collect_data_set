@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
         Route::group(['prefix' => 'translate'], function (){
             Route::get('/index', [TranslateContextController::class, 'index'])->name('context.translate.index');
+            Route::get('/show/{context}', [TranslateContextController::class, 'show'])->name('context.translate.show');
             Route::post('/upload/csv', [TranslateContextController::class, 'uploadCSV'])->name('context.translate.upload_csv');
         });
     });
@@ -66,5 +67,7 @@ Route::group(['prefix' => 'auth'], function (){
     Route::post('/register', [RegisterController::class, 'register'])->name('admin.register');
 });
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', function (){
+    return redirect()->route('admin.index');
+});
 
