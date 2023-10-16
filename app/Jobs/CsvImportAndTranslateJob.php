@@ -55,12 +55,17 @@ class CsvImportAndTranslateJob implements ShouldQueue
                 continue;
             }
             if($record['context'] != $last_context || $context == null){
-                $title = null ? !isset($record['title']) : $translator->translate($record['title'], $this->source_lang, $this->target_lang)['result'];
+                $title = null;
+                $original_title = null;
+                if(isset($record['title'])){
+                    $title = $translator->translate($record['title'], $this->source_lang, $this->target_lang)['result'];
+                    $original_title = $record['title'];
+                }
                 $translated_context = $translator->translate($record['context'], $this->source_lang, $this->target_lang)['result'];
                 $context = Context::create([
                     'title' => $title,
                     'context' => $translated_context,
-                    'original_title' => null ? !isset($record['title']) : $record['title'],
+                    'original_title' => $original_title,
                     'original_context' => $record['context'],
                     'created_by' => $this->user,
                     'lang' => $this->source_lang
