@@ -24,7 +24,7 @@ class TranslateContextController extends Controller
                 break;
             }
         }
-        $contexts = Context::where('lang', '!=', null)->get();
+        $contexts = Context::where('lang', '!=', null)->paginate(100);
         return view('admin.context.translate.index', compact('contexts'));
     }
 

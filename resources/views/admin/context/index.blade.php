@@ -56,6 +56,7 @@
                             </tr>
                             </tfoot>
                         </table>
+                        @include('includes.context_pagination')
                         <form action="{{route('upload.csv')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div style="display: flex">

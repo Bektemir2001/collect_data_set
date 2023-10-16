@@ -20,7 +20,7 @@ class ContextController extends Controller
 
     public function index()
     {
-        $contexts = Context::all();
+        $contexts = Context::paginate(100);
         return view('admin.context.index', compact('contexts'));
     }
 
