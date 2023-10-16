@@ -82,6 +82,7 @@ class CsvImportAndTranslateJob implements ShouldQueue
             for($j = 0; $j < count($answers); $j++)
             {
                 $answer = $translator->translate($answers[$j], $this->source_lang, $this->target_lang)['result'];
+                if($answer == null) continue;
                 QuestionAnswer::create(
                     [
                         'context_id' => $context->id,
