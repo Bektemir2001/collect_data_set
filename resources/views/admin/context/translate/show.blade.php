@@ -56,13 +56,13 @@
 
                 <div class="mb-4 mt-4" style="margin-left: 60%">
                     @if($previous_context)
-                        <a type="submit" href="{{route('context.index', $previous_context)}}" class="btn bg-danger">Previous</a>
+                        <a type="submit" href="{{route('context.translate.index', $previous_context)}}" class="btn bg-danger">Previous</a>
                     @endif
 
                     <button type="submit" class="btn btn-primary mr-2">Save changes</button>
 
                     @if($next_context)
-                        <a type="submit" href="{{route('context.show', $next_context)}}" class="btn bg-success">Next</a>
+                        <a type="submit" href="{{route('context.translate.show', $next_context)}}" class="btn bg-success">Next</a>
                     @endif
 
 
