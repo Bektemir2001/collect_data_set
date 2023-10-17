@@ -44,7 +44,7 @@ class CsvImportAndTranslateJob implements ShouldQueue
         $csv->setDelimiter($this->delimiter);
         $statement = (new Statement())
             ->offset(0)
-            ->limit(4000);
+            ->limit(10000);
         $results = $statement->process($csv);
         $i = 0;
         $last_context = '';
