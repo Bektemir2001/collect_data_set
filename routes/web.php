@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Admin\CollectData\ContextController;
 use App\Http\Controllers\Admin\CollectData\Export\ExportQuestionController;
+use App\Http\Controllers\Admin\CollectData\IndexingController;
 use App\Http\Controllers\Admin\CollectData\QuestionAnswerController;
 use App\Http\Controllers\Admin\CollectData\Translate\TranslateContextController;
 use App\Http\Controllers\Admin\CollectData\UploadController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\SQuid2Controller;
 use App\Http\Controllers\Auth\LoginController;
@@ -22,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use Stichoza\GoogleTranslate\GoogleTranslate;
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::get('/', [IndexController::class, 'index'])->name('admin.index');
@@ -56,6 +58,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::post('/upload', [UploadController::class, 'CSV'])->name('upload.csv');
         Route::post('/export/questions', [ExportQuestionController::class, 'csv'])->name('export.questions');
     });
+
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::post('/indexing', [IndexingController::class, 'make'])->name('indexing');
 });
 
 

@@ -10,4 +10,9 @@ class QuestionAnswer extends Model
     use HasFactory;
     protected $table = 'question_answers';
     protected $guarded = false;
+
+    public function context()
+    {
+        return $this->belongsTo(Context::class);
+    }
 }
