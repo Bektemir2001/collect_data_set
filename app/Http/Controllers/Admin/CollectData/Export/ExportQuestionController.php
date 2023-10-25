@@ -27,7 +27,7 @@ class ExportQuestionController extends Controller
         foreach ($questions as $question)
         {
             $answers = str_replace("'", "", $question->answer);
-            $answers = "{'text': ['$answers'], 'answer_start': [1]}";
+            $answers = "{'text': ['$answers'], 'answer_start': [$question->start_index]}";
             $csv->insertOne([$question->context, $question->question, $answers]);
         }
         $headers = [

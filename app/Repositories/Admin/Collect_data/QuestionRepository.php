@@ -11,7 +11,8 @@ class QuestionRepository
     {
         return DB::table('question_answers as q')
             ->join('contexts as c', 'c.id', '=', 'q.context_id')
-            ->select('c.context', 'q.question', 'q.answer')
+            ->select('c.context', 'q.question', 'q.answer', 'q.start_index', 'q.end_index')
+            ->where('c.lang', 'EN')
             ->limit($limit)
             ->get();
     }
