@@ -20,7 +20,7 @@ class QuestionRepository
     {
         return DB::table('question_answers as q')
             ->join('contexts as c', 'c.id', '=', 'q.context_id')
-            ->select('c.title', 'q.question', 'q.answer')
+            ->select('c.title', 'q.question', 'q.answer', 'c.context', 'c.lang')
             ->limit($limit)
             ->get();
     }

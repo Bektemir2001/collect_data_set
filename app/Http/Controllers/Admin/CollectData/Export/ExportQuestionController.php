@@ -50,7 +50,13 @@ class ExportQuestionController extends Controller
         {
             $instruction = $question->question;
             $output = $question->answer;
-            $input = $question->title != null ? $question->title : '';
+            if($question->lang != null)
+            {
+                $input = $question->context;
+            }
+            else{
+                $input = $question->title;
+            }
             $csv->insertOne([$instruction, $input, $output]);
         }
         $headers = [
