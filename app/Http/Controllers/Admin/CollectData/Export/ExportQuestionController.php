@@ -57,5 +57,6 @@ class ExportQuestionController extends Controller
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="questions_for_lama.csv"',
         ];
+        return response($csv->__toString(), 200, $headers);
     }
 }
