@@ -44,7 +44,7 @@ class ExportQuestionController extends Controller
         $data = $request->validated();
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
         $csv->insertOne(['Instruction', 'Input', 'Output']);
-        $questions = $this->questionRepository->getQuestionsForCsv($data['limit']);
+        $questions = $this->questionRepository->getQuestionsForLlama($data['limit']);
 
         foreach ($questions as $question)
         {
