@@ -65,6 +65,15 @@
                             </div>
 
                         </form>
+                        <div class="mb-4 mt-4"></div>
+                        <form action="{{route('alpaca.kg')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div style="display: flex">
+                                <input class="form-control" id="csv_file" name="csv_file" type="file" style="width: 60%;"/>
+                                <button type="submit" class="btn btn-primary">upload alpaca kg csv</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
