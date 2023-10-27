@@ -12,7 +12,15 @@ class QuestionRepository
         return DB::table('question_answers as q')
             ->join('contexts as c', 'c.id', '=', 'q.context_id')
             ->select('c.context', 'q.question', 'q.answer', 'q.start_index', 'q.end_index')
-            ->where('c.lang', 'EN')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function getQuestionsForLlama(int $limit=100): Collection
+    {
+        return DB::table('question_answers as q')
+            ->join('contexts as c', 'c.id', '=', 'q.context_id')
+            ->select('c.title', 'q.question', 'q.answer')
             ->limit($limit)
             ->get();
     }

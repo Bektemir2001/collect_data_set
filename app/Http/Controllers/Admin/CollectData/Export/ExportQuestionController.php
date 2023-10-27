@@ -38,4 +38,24 @@ class ExportQuestionController extends Controller
         return response($csv->__toString(), 200, $headers);
 
     }
+
+    public function forLama(ExportQuestionRequest $request)
+    {
+        $data = $request->validated();
+        $csv = Writer::createFromFileObject(new \SplTempFileObject());
+        $csv->insertOne(['Instruction', 'Input', 'Output']);
+        $questions = $this->questionRepository->getQuestionsForCsv($data['limit']);
+
+        foreach ($questions as $question)
+        {
+            $instruction = $question->question;
+            $output = $question->answer;
+            $input = $question->title != null ? $question->title : '';
+            $csv->insertOne([$instruction, $input, $output]);
+        }
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="questions_for_lama.csv"',
+        ];
+    }
 }

@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::post('/upload', [UploadController::class, 'CSV'])->name('upload.csv');
         Route::post('/upload/alpaca/kg', [UploadController::class, 'alpacaKG'])->name('alpaca.kg');
         Route::post('/export/questions', [ExportQuestionController::class, 'csv'])->name('export.questions');
+        Route::post('/export/questions/for/llama', [ExportQuestionController::class, 'forLama'])->name('export.questions.for.lama');
     });
 
 
