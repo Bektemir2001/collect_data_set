@@ -57,6 +57,8 @@ class ExportQuestionController extends Controller
             else{
                 $input = $question->title;
             }
+
+            if($input == null) $input = '';
             $csv->insertOne([$instruction, $input, $output]);
         }
         $headers = [
