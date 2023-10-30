@@ -194,7 +194,7 @@
                 <div class="card-body">
                         <div class="form-group">
                             <label for="question${object.id}">question:</label>
-                            <input type="text" class="form-control" id="question${object.id}">
+                            <input type="text" class="form-control" id="question${object.id}" value="${object.question}">
                         </div>
                         <div class="form-group">
                             <label for="answer${object.id}">answer:</label>
