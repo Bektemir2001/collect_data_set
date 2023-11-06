@@ -26,6 +26,15 @@ class UploadCsvService
             }
             $question = $translator->translate($record['instruction'], $source_lang, 'KG')['result'];
             $answer = $translator->translate($record['output'], $source_lang, 'KG')['result'];
+
+            if($question == null){
+                $i += 1;
+                continue;
+            }
+            if($answer == null){
+                $i += 1;
+                continue;
+            }
             QuestionAnswer::create(
                 [
                     'original_question' => $record['instruction'],
@@ -37,10 +46,10 @@ class UploadCsvService
                 ]
             );
 
-            if($i % 30 == 0)
+            if($i % 10 == 0)
             {
                 $process->update(['present' => ($i / $length) * 100]);
-                sleep(1);
+                sleep(2);
             }
         }
 
