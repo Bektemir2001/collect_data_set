@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CollectData\Translate\TranslateContextController;
 use App\Http\Controllers\Admin\CollectData\UploadController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SQuid2Controller;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -32,6 +33,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::get('/get/data', [SQuid2Controller::class, 'getData'])->name('getdata');
     Route::post('/translate', [SQuid2Controller::class, 'translate'])->name('translate');
 
+    Route::group(['prefix' => 'questions'], function (){
+        Route::get('/', [QuestionController::class, 'index'])->name('admin.question');
+        Route::post('/upload/csv', [QuestionController::class, 'uploadCsv'])->name('admin.question.upload.csv');
+    });
 
     Route::group(['prefix' => 'contexts'], function (){
         Route::get('/', [ContextController::class, 'index'])->name('context.index');
