@@ -25,4 +25,12 @@ class QuestionRepository
             ->get();
     }
 
+    public function getQuestionsForMistral(array $types)
+    {
+        return DB::table('question_answers as q')
+            ->select( 'q.question', 'q.answer')
+            ->whereIn('q.type', $types)
+            ->get();
+    }
+
 }

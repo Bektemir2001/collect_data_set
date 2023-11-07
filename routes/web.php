@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::group(['prefix' => 'questions'], function (){
         Route::get('/', [QuestionController::class, 'index'])->name('admin.question');
         Route::post('/upload/csv', [QuestionController::class, 'uploadCsv'])->name('admin.question.upload.csv');
+        Route::post('/export/csv', [QuestionController::class, 'export'])->name('admin.question.export.csv');
     });
 
     Route::group(['prefix' => 'contexts'], function (){
