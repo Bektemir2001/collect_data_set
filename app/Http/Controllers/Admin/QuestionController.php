@@ -49,7 +49,6 @@ class QuestionController extends Controller
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
         $csv->insertOne(['Instruction', 'Output']);
         $questions = $this->questionRepository->getQuestionsForMistral($data['types']);
-        dd($questions);
         foreach ($questions as $question)
         {
             $instruction = $question->question;
