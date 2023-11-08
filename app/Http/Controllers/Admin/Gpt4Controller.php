@@ -29,6 +29,14 @@ class Gpt4Controller extends Controller
         $text = $this->textService->cleanText($context->context);
         $title = $context->title;
         $text = $title . "\n".$text;
-        dd($this->gpt4Service->generateQuestion($text));
+        $gpt_result = $this->gpt4Service->generateQuestion($text);
+
+        if($gpt_result['status_code'] == 500)
+        {
+            return response(['data' => $gpt_result['data']])->setStatusCode(500);
+        }
+        dd($gpt_result);
+        $gpt_result = $this->textService->forGpt4($gpt_result['data']);
+        dd($gpt_result);
     }
 }

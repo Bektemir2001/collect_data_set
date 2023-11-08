@@ -4,6 +4,8 @@ namespace App\Services;
 
 class TextService
 {
+    public const QUESTIONS = ['Question:', 'Суроо:'];
+    public const ANSWERS = ['Answer:', 'Жооп:'];
     protected TranslateService $translateService;
     public function __construct(TranslateService $translateService)
     {
@@ -41,7 +43,16 @@ class TextService
         }
         return $results;
     }
+    public function forGpt4($response_text): array
+    {
+        $question_answers = explode("\n", $response_text);
+        return $question_answers;
+        for($i = 0; $i < count($question_answers); $i += 2)
+        {
 
+        }
+        return [];
+    }
     public function cleanText($text)
     {
         $cleaned_text = html_entity_decode(strip_tags($text), ENT_QUOTES, 'UTF-8');
