@@ -41,4 +41,10 @@ class TextService
         }
         return $results;
     }
+
+    public function cleanText($text)
+    {
+        $cleaned_text = html_entity_decode(strip_tags($text), ENT_QUOTES, 'UTF-8');
+        return preg_replace('/\s+/u', ' ', $cleaned_text);
+    }
 }

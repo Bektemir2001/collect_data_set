@@ -36,6 +36,7 @@
     </div>
     <button type="submit" class="btn btn-success mr-2" onclick="addQuestion()">Add question</button>
     <button type="submit" class="btn btn-primary mr-2" onclick="autoGenerate()">Generate questions with GPT 3.5</button>
+    <button type="submit" class="btn btn-primary mr-2" onclick="autoGenerateGpt4()">Generate questions with GPT 4</button>
 </div>
 
 <script>
@@ -179,7 +180,28 @@
             }
         }
     }
+    function autoGenerateGpt4()
+    {
+        let url = "{{route('gpt4.question.generate')}}";
+        let data = new FormData();
+        data.append('context_id', {{$context->id}});
+        fetch(url, {
+            method:'POST',
+            headers: {
+                'X-CSRF-TOKEN': "{{csrf_token()}}"
+            },
+            body: data
+        })
+            .then(response => response.json())
+            .then(res => {
+                res = res.data;
+                for(let i = 0; res.length; i++)
+                {
+                    addGeneratedQuestion(res[i]);
+                }
+            });
 
+    }
     function addGeneratedQuestion(object)
     {
         let newElement = document.createElement("div");

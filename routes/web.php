@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CollectData\QuestionAnswerController;
 use App\Http\Controllers\Admin\CollectData\Translate\TranslateContextController;
 use App\Http\Controllers\Admin\CollectData\UploadController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Gpt4Controller;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SQuid2Controller;
@@ -79,6 +80,10 @@ Route::group(['prefix' => 'auth'], function (){
     Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register.index');
     Route::post('/register', [RegisterController::class, 'register'])->name('admin.register');
+});
+
+Route::group(['prefix' => 'gpt4'], function (){
+    Route::post('/generate/question', [Gpt4Controller::class, 'generateQuestion'])->name('gpt4.question.generate');
 });
 
 Route::get('/', function (){
