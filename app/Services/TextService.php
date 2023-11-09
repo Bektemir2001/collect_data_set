@@ -14,44 +14,51 @@ class TextService
 
     public function forGptResponse(array $response): array
     {
-        $results = [];
-        foreach ($response as $text)
-        {
-            $tmp = explode("\n", $text['text']);
-            for($i = 0; $i < count($tmp)-1; $i++)
+        try{
+            $results = [];
+            foreach ($response as $text)
             {
-                if(strlen($tmp[$i]) < 4 || strlen($tmp[$i + 1]) < 4) continue;
-                if($tmp[$i][0] == 'Q'  && $tmp[$i+1][0] == 'A')
+                $tmp = explode("\n", $text['text']);
+                for($i = 0; $i < count($tmp)-1; $i++)
                 {
-                    $question = $this->translateService->translate($tmp[$i], 'EN', 'KG');
-                    if($question['code'] == 200)
+                    if(strlen($tmp[$i]) < 4 || strlen($tmp[$i + 1]) < 4) continue;
+                    if($tmp[$i][0] == 'Q'  && $tmp[$i+1][0] == 'A')
                     {
-                        $answer = $this->translateService->translate($tmp[$i+1], 'EN', 'KG');
-                        if($answer['code'] == 200){
-                            $q = [
-                                'question' => $question['result'],
-                                'answer' => $answer['result']
+                        $question = $this->translateService->translate($tmp[$i], 'EN', 'KG');
+                        if($question['code'] == 200)
+                        {
+                            $answer = $this->translateService->translate($tmp[$i+1], 'EN', 'KG');
+                            if($answer['code'] == 200){
+                                $q = [
+                                    'question' => $question['result'],
+                                    'answer' => $answer['result']
                                 ];
-                            array_push($results, $q);
+                                array_push($results, $q);
+                            }
+
                         }
 
                     }
-
                 }
-            }
 
+            }
+            return ['data' => $results, 'status_code' => 200];
         }
-        return $results;
+        catch (\Exception $exception)
+        {
+            return ['data' => $exception->getMessage(), 'status_code' => 500];
+        }
+
     }
     public function forGpt4($response_text): array
     {
         $question_answers = $this->explodeGptResult($response_text);
-        return $question_answers;
+        $result_array = [];
         for($i = 0; $i < count($question_answers); $i += 2)
         {
-
+            $result_array[] = ['question' => $question_answers[$i], 'answer' => $question_answers[$i + 1]];
         }
-        return [];
+        return $result_array;
     }
     public function cleanText($text)
     {

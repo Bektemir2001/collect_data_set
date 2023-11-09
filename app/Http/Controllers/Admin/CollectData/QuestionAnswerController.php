@@ -67,6 +67,7 @@ class QuestionAnswerController extends Controller
                 'context_id' => $context_id,
                 'question' => $q[count($q)-1],
                 'answer' => $a[count($a)-1],
+                'type' => 'gpt-3',
                 'created_by' => auth()->user()->id
                 ]);
             array_push($result, $question);

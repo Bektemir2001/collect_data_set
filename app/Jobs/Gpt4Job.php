@@ -2,8 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Models\Context;
+use App\Models\FailedContexts;
+use App\Models\UploadProcess;
+use App\Repositories\Admin\Collect_data\QuestionRepository;
+use App\Services\Gpt4Service;
+use App\Services\TextService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,9 +21,22 @@ class Gpt4Job implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+
+    protected int $user;
+    protected int $context_start;
+    protected int $context_stop;
+    protected TextService $textService;
+    protected Gpt4Service $gpt4Service;
+    protected QuestionRepository $questionRepository;
+    public function __construct(Gpt4Service $gpt4Service, TextService $textService, QuestionRepository $questionRepository,
+    int $user, int $context_start, int $context_stop)
     {
-        //
+        $this->textService = $textService;
+        $this->gpt4Service = $gpt4Service;
+        $this->questionRepository = $questionRepository;
+        $this->user = $user;
+        $this->context_start = $context_start;
+        $this->context_stop = $context_stop;
     }
 
     /**
@@ -26,6 +44,48 @@ class Gpt4Job implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $process = UploadProcess::create([
+            'model' => 'Gpt 4',
+            'description' => 'Generating questions and answers',
+            'present' => 0
+        ]);
+        for($i = $this->context_start; $i <= $this->context_stop; $i++)
+        {
+            $context = Context::where('id', $i)->first();
+            if(!$context) continue;
+            $text = $this->textService->cleanText($context->context);
+            $title = $context->title;
+            $text = $title . "\n".$text;
+            $gpt_result = $this->gpt4Service->generateQuestion($text);
+            if($gpt_result['status_code'] == 500)
+            {
+                FailedContexts::create([
+                    'error' => $gpt_result['data'],
+                    'created_by' => $this->user,
+                    'context_id' => $context->id
+                ]);
+                continue;
+            }
+            $gpt_result = $this->textService->forGpt4($gpt_result['data']);
+            if($gpt_result['status_code'] == 500)
+            {
+                FailedContexts::create([
+                    'error' => $gpt_result['data'],
+                    'created_by' => $this->user,
+                    'context_id' => $context->id
+                ]);
+                continue;
+            }
+
+            $this->questionRepository->saveQuestions($gpt_result['data'], $context->id, auth()->user()->id, 'gpt-4');
+
+            sleep(40);
+            if($i % 20 == 0)
+            {
+                $process->update(['present' => ($i * 100) / $this->context_stop]);
+                sleep(40);
+            }
+        }
+        $process->delete();
     }
 }

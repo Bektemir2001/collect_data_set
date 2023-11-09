@@ -194,11 +194,9 @@
         })
             .then(response => response.json())
             .then(res => {
-                res = res.data;
-                for(let i = 0; res.length; i++)
-                {
-                    addGeneratedQuestion(res[i]);
-                }
+                if(res.status_code === 200) document.location.reload();
+                else alert(res.data);
+
             });
 
     }
