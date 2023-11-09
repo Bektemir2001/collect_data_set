@@ -35,7 +35,7 @@ class Gpt4Controller extends Controller
         {
             return response(['data' => $gpt_result['data']])->setStatusCode(500);
         }
-        dd($gpt_result);
+        dd($this->textService->forGpt4($gpt_result['data']));
         $gpt_result = $this->textService->forGpt4($gpt_result['data']);
         dd($gpt_result);
     }

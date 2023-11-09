@@ -4,8 +4,8 @@ namespace App\Services;
 
 class TextService
 {
-    public const QUESTIONS = ['Question:', 'Суроо:'];
-    public const ANSWERS = ['Answer:', 'Жооп:'];
+    public const QUESTIONS = ['Question:', 'Суроо:', 'question:', 'суроо:'];
+    public const ANSWERS = ['Answer:', 'Жооп:', 'answer:', 'жооп:'];
     protected TranslateService $translateService;
     public function __construct(TranslateService $translateService)
     {
@@ -45,7 +45,7 @@ class TextService
     }
     public function forGpt4($response_text): array
     {
-        $question_answers = explode("\n", $response_text);
+        $question_answers = $this->explodeGptResult($response_text);
         return $question_answers;
         for($i = 0; $i < count($question_answers); $i += 2)
         {
@@ -57,5 +57,52 @@ class TextService
     {
         $cleaned_text = html_entity_decode(strip_tags($text), ENT_QUOTES, 'UTF-8');
         return preg_replace('/\s+/u', ' ', $cleaned_text);
+    }
+
+    public function explodeGptResult($text)
+    {
+        $text_array = [];
+        $text_tmp = '';
+        $is_starting_part_cut = false;
+        for ($i = 0; $i < strlen($text); $i++)
+        {
+            if($text[$i] == "\n")
+            {
+                if(strlen($text_tmp) != 0)
+                {
+                    array_push($text_array, $text_tmp);
+                    $text_tmp = '';
+                    $is_starting_part_cut = false;
+                }
+            }
+            else
+            {
+                $text_tmp .= $text[$i];
+                if($is_starting_part_cut == false)
+                {
+                    $is_starting_part_cut = $this->is_starting_part($text_tmp);
+                    if($is_starting_part_cut) $text_tmp = '';
+                }
+            }
+        }
+
+        if(strlen($text_tmp)) array_push($text_array, $text_tmp);
+
+        return $text_array;
+    }
+
+    public function is_starting_part(string $text): bool
+    {
+        $arr = [];
+        foreach (self::ANSWERS as $ANSWER) {
+            array_push($arr, [$text, $ANSWER]);
+            if(strpos($text, $ANSWER) !== false) return true;
+        }
+
+        foreach (self::QUESTIONS as $QUESTION) {
+            array_push($arr, [$text, $QUESTION]);
+            if(strpos($text, $QUESTION) !== false) return true;
+        }
+        return false;
     }
 }

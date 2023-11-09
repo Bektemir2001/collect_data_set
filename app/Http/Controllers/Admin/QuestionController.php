@@ -47,7 +47,8 @@ class QuestionController extends Controller
     {
         $data = $request->validate(['types' => 'required']);
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(['Instruction', 'Output']);
+        $csv->setDelimiter(';');
+        $csv->insertOne(['input', 'output']);
         $questions = $this->questionRepository->getQuestionsForMistral($data['types']);
         foreach ($questions as $question)
         {
@@ -61,4 +62,6 @@ class QuestionController extends Controller
         ];
         return response($csv->__toString(), 200, $headers);
     }
+
+
 }
