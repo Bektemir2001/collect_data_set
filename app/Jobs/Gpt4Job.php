@@ -77,7 +77,7 @@ class Gpt4Job implements ShouldQueue
                 continue;
             }
 
-            $this->questionRepository->saveQuestions($gpt_result['data'], $context->id, auth()->user()->id, 'gpt-4');
+            $this->questionRepository->saveQuestions($gpt_result['data'], $context->id, $this->user, 'gpt-4');
 
             sleep(40);
             if($i % 20 == 0)

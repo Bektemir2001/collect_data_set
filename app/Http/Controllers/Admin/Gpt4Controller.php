@@ -56,7 +56,7 @@ class Gpt4Controller extends Controller
             'context_end' => 'required|integer'
         ]);
         $user = auth()->user()->id;
-        Gpt4Job::dispatch($this->gpt4Service, $this->textService, $this->questionRepository, $user, $data['context_start'], $data['context_stop']);
-        return response(['data' => 'success']);
+        Gpt4Job::dispatch($this->gpt4Service, $this->textService, $this->questionRepository, $user, $data['context_start'], $data['context_end']);
+        return back()->with(['notification' => 'success']);
     }
 }

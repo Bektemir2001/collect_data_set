@@ -48,6 +48,7 @@ class QuestionAnswerController extends Controller
          ]);
 
         $data['created_by'] = auth()->user()->id;
+        $data['type'] = 'manual';
 
         $question = QuestionAnswer::create($data);
 

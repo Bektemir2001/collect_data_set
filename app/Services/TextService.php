@@ -52,13 +52,20 @@ class TextService
     }
     public function forGpt4($response_text): array
     {
-        $question_answers = $this->explodeGptResult($response_text);
-        $result_array = [];
-        for($i = 0; $i < count($question_answers); $i += 2)
-        {
-            $result_array[] = ['question' => $question_answers[$i], 'answer' => $question_answers[$i + 1]];
+        try{
+            $question_answers = $this->explodeGptResult($response_text);
+            $result_array = [];
+            for($i = 0; $i < count($question_answers); $i += 2)
+            {
+                $result_array[] = ['question' => $question_answers[$i], 'answer' => $question_answers[$i + 1]];
+            }
+            return ['data' => $result_array, 'status_code' => 200];
         }
-        return $result_array;
+        catch (\Exception $exception)
+        {
+            return ['data' => $exception->getMessage(), 'status_code' => 500];
+        }
+
     }
     public function cleanText($text)
     {

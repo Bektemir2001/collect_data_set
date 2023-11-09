@@ -84,6 +84,7 @@ Route::group(['prefix' => 'auth'], function (){
 
 Route::group(['prefix' => 'gpt4'], function (){
     Route::post('/generate/question', [Gpt4Controller::class, 'generateQuestion'])->name('gpt4.question.generate');
+    Route::post('/generate/default/question', [Gpt4Controller::class, 'defaultGenerating'])->name('gpt4.question.default.generate');
 });
 
 Route::get('/', function (){
