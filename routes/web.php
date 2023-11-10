@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Gpt4Controller;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SQuid2Controller;
+use App\Http\Controllers\Admin\User\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\DB;
@@ -67,6 +68,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::post('/upload/alpaca/kg', [UploadController::class, 'alpacaKG'])->name('alpaca.kg');
         Route::post('/export/questions', [ExportQuestionController::class, 'csv'])->name('export.questions');
         Route::post('/export/questions/for/llama', [ExportQuestionController::class, 'forLama'])->name('export.questions.for.lama');
+    });
+
+    Route::group(['prefix' => 'profile'], function (){
+        Route::get('/', [ProfileController::class, 'index'])->name('admin.profile.index');
     });
 
 

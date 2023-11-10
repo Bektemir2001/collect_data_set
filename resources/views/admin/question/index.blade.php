@@ -61,26 +61,15 @@
                 <div class="card-body">
                     <form action="{{route('admin.question.export.csv')}}" method="POST">
                         @csrf
-                        <div class="form-row mb-4 mt-4">
-                            <div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list"
-                                 aria-haspopup="true" aria-expanded="false" dir="ltr">
-                                <div class="choices__inner">
-                                    <label for="types">Types</label>
-                                    <select class="custom-select form-control choicesjs choices__input is-hidden"
-                                            multiple="" tabindex="-1" aria-hidden="true" data-choice="active" id="types"
-                                            name="types[]">
-                                        <option value="squad">squad</option>
-                                        <option value="translated_mistral">translated_mistral</option>
-                                        <option value="gpt-4">gpt-4</option>
-                                    </select>
-                                    <div class="choices__list choices__list--multiple"></div>
-                                    <input type="text" class="choices__input choices__input--cloned" autocomplete="off"
-                                           autocapitalize="off" spellcheck="false" role="textbox"
-                                           aria-autocomplete="list" aria-label="null"
-                                           aria-activedescendant="choices--blp0-item-choice-1"
-                                           style="width: 900px; height: 100px;">
-                                </div>
-                            </div>
+                        <div class="form-group col-6 mb-4 mt-4">
+                            <label for="types">Types</label>
+                            <select class="custom-select form-control col-12 choicesjs" id="types"
+                                    name="types[]" multiple>
+                                <option value="squad">squad</option>
+                                <option value="translated_mistral">translated_mistral</option>
+                                <option value="gpt-4">gpt-4</option>
+                                <option value="gpt-4">gpt-3</option>
+                            </select>
                         </div>
                         <button class="btn btn-primary" type="submit">Upload</button>
                     </form>
