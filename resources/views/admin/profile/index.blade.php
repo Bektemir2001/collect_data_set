@@ -27,3 +27,7 @@
         </div>
     </div>
 @endsection
+@section('charts')
+    @include('includes.profile.line_chart')
+    @include('includes.profile.pie_chart')
+@endsection

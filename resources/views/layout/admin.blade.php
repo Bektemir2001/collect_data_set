@@ -129,8 +129,7 @@
         document.getElementById('notification_id').outerHTML = '';
     }
 </script>
-<script src="{{asset('admin_files/assets/js/chart-custom.js')}}"></script>
-<script src="{{asset('admin_files/assets/js/charts/01.js')}}"></script>
-<script src="{{asset('admin_files/assets/js/charts/02.js')}}"></script>
+@yield('charts')
+
 </body>
 </html>
