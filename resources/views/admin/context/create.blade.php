@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Edit Context</h4>
+                <h4 class="card-title">Create Context</h4>
             </div>
             <div class="header-action">
                 <i data-toggle="collapse" data-target="#form-element-6" aria-expanded="false" class="collapsed">
