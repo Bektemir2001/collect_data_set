@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SQuid2Controller;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -91,3 +92,10 @@ Route::get('/', function (){
     return redirect()->route('admin.index');
 });
 
+Route::get('/failed-jobs', function (){
+    dd(DB::table('failed_jobs')->get());
+});
+
+Route::get('/failed-contents', function (){
+    dd(DB::table('failed_contexts')->get());
+});
