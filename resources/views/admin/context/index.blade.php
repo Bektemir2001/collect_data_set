@@ -38,7 +38,7 @@
                                     <tr>
                                         <td>{{$context->id}}</td>
                                         <td>{{$context->title}}</td>
-                                        <td>{!! Str::limit($context->context, 150)!!}</td>
+                                        <td>{{ strip_tags(Str::limit($context->context, 150))}}</td>
                                         <td>{{count($context->questions)}}</td>
                                         <td>
                                             <a href="{{route('context.show', $context->id)}}" class="btn btn-primary">show</a>
