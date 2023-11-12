@@ -108,14 +108,14 @@ Route::get('/failed-contents', function (){
     dd(DB::table('failed_contexts')->get());
 });
 
-Route::get('/extra/contexts', function (){
-    $contexts = \App\Models\Context::whereRaw('CHAR_LENGTH(context) < 400')->get();
-    foreach ($contexts as $context)
-    {
-        if(!count($context->questions))
-        {
-            $context->delete();
-        }
-    }
-    dd($contexts);
-});
+//Route::get('/extra/contexts', function (){
+//    $contexts = \App\Models\Context::whereRaw('CHAR_LENGTH(context) < 400')->get();
+//    foreach ($contexts as $context)
+//    {
+//        if(!count($context->questions))
+//        {
+//            $context->delete();
+//        }
+//    }
+//    dd($contexts);
+//});
