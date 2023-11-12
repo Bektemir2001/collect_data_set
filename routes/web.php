@@ -49,10 +49,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::post('/', [ContextController::class, 'store'])->name('context.store');
         Route::post('/update/{context}', [ContextController::class, 'update'])->name('context.update');
 
+
         Route::group(['prefix' => 'translate'], function (){
             Route::get('/index', [TranslateContextController::class, 'index'])->name('context.translate.index');
             Route::get('/show/{context}', [TranslateContextController::class, 'show'])->name('context.translate.show');
             Route::post('/upload/csv', [TranslateContextController::class, 'uploadCSV'])->name('context.translate.upload_csv');
+
         });
     });
 
@@ -72,6 +74,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'profile'], function (){
         Route::get('/', [ProfileController::class, 'index'])->name('admin.profile.index');
+        Route::get('/context/diagram', [ProfileController::class, 'getDiagram'])->name('admin.profile.diagram');
     });
 
 
