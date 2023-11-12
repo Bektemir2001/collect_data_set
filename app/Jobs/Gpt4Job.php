@@ -86,7 +86,7 @@ class Gpt4Job implements ShouldQueue
             sleep(40);
             if($i % 20 == 0)
             {
-                $process->update(['present' => round(($j / $total) * 100)], 2);
+                $process->update(['present' => round(($j / $total) * 100, 2)]);
                 sleep(40);
             }
         }
