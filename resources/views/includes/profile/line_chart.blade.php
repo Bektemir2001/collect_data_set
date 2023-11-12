@@ -1,6 +1,57 @@
 <script>
+    let day = 0;
+    function previous_Day()
+    {
+        day = day + 1;
+        document.getElementById('apex-basic').innerHTML = '';
+        getLineData(day);
+
+    }
+
+    function next_Day()
+    {
+        if(day > 0)
+        {
+            day = day - 1;
+            document.getElementById('apex-basic').innerHTML = '';
+            getLineData(day);
+        }
+
+    }
+
+    function getLineData(day)
+    {
+        data = new FormData();
+        data.append('day', day);
+        let url = "{{route('admin.profile.graphic')}}";
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': "{{csrf_token()}}"
+            },
+            body: data
+        })
+            .then(response => response.json())
+            .then(data => {
+                lineChart(data.data);
+            });
+    }
     function lineChart(data)
     {
+        let days = [];
+        let context_counts = [];
+        if(data)
+        {
+            for(let i = 0; i < data.length; i++)
+            {
+                days.push(data[i].day);
+                context_counts.push(data[i].context_count);
+            }
+        }
+        else{
+            console.log('error')
+            return;
+        }
         options = {
             chart: {
                 height: 350,
@@ -12,7 +63,7 @@
             colors: ["#4788ff"],
             series: [{
                 name: "Desktops",
-                data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                data: context_counts
             }],
             dataLabels: {
                 enabled: !1
@@ -21,7 +72,7 @@
                 curve: "straight"
             },
             title: {
-                text: "Product Trends by Month",
+                text: "Context count for 9 day",
                 align: "left"
             },
             grid: {
@@ -31,7 +82,7 @@
                 }
             },
             xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]
+                categories: days
             }
         };
         if(typeof ApexCharts !== typeof undefined){
@@ -48,5 +99,7 @@
             })
         }
     }
-    lineChart(null);
+
+
+    getLineData(0);
 </script>

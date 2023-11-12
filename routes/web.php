@@ -75,6 +75,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::group(['prefix' => 'profile'], function (){
         Route::get('/', [ProfileController::class, 'index'])->name('admin.profile.index');
         Route::get('/context/diagram', [ProfileController::class, 'getDiagram'])->name('admin.profile.diagram');
+        Route::post('/context/graphic', [ProfileController::class, 'getGraphic'])->name('admin.profile.graphic');
     });
 
 

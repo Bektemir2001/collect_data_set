@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Models\Context;
 use App\Services\ProfileService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class ProfileController extends Controller
 {
@@ -25,5 +27,11 @@ class ProfileController extends Controller
     public function getDiagram()
     {
         return response($this->profileService->getDiagram());
+    }
+
+    public function getGraphic(Request $request)
+    {
+        $current_date = Carbon::now();
+        return response($this->profileService->getGraphic(auth()->user()->id, $request->day, $current_date));
     }
 }
