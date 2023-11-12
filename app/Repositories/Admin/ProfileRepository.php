@@ -11,6 +11,7 @@ class ProfileRepository
         return DB::table('contexts')
             ->join('users', 'users.id', '=', 'contexts.created_by')
             ->select(DB::raw('COUNT(contexts.id) as context_count'), 'users.name')
+            ->where('contexts.lang', '=', null)
             ->groupBy('users.id')
             ->get();
     }
