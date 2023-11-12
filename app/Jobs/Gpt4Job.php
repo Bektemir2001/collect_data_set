@@ -49,8 +49,11 @@ class Gpt4Job implements ShouldQueue
             'description' => 'Generating questions and answers',
             'present' => 0
         ]);
+        $total = $this->context_stop - $this->context_start;
+        $j = 0;
         for($i = $this->context_start; $i <= $this->context_stop; $i++)
         {
+            $j += 1;
             $context = Context::where('id', $i)->first();
             if(!$context) continue;
             $text = $this->textService->cleanText($context->context);
@@ -82,7 +85,7 @@ class Gpt4Job implements ShouldQueue
             sleep(40);
             if($i % 20 == 0)
             {
-                $process->update(['present' => ($i * 100) / $this->context_stop]);
+                $process->update(['present' => round(($j / $total) * 100)], 2);
                 sleep(40);
             }
         }
