@@ -28,7 +28,14 @@
             for(let i = 0; i < data.length; i++)
             {
                 labels.push(data[i].name);
-                series.push(data[i].context_count);
+                if(data[i].context_count > 5000)
+                {
+                    series.push(300);
+                }
+                else{
+                    series.push(data[i].context_count);
+                }
+
                 pie_colors.push(colors[i]);
             }
         }
