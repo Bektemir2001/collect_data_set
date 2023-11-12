@@ -110,12 +110,5 @@ Route::get('/failed-contents', function (){
 
 Route::get('/extra/contexts', function (){
     $contexts = \App\Models\Context::whereRaw('CHAR_LENGTH(context) < 200')->get();
-    foreach ($contexts as $context)
-    {
-        if(!count($context->questions))
-        {
-            $context->delete();
-        }
-    }
     dd($contexts);
 });
