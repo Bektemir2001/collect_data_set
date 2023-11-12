@@ -69,11 +69,12 @@ class Gpt4Job implements ShouldQueue
                 ]);
                 continue;
             }
+            $gpt_response = $gpt_result['data'];
             $gpt_result = $this->textService->forGpt4($gpt_result['data']);
             if($gpt_result['status_code'] == 500)
             {
                 FailedContexts::create([
-                    'error' => $gpt_result['data'],
+                    'error' => $gpt_result['data'] . "\n" . $gpt_response,
                     'created_by' => $this->user,
                     'context_id' => $context->id
                 ]);
