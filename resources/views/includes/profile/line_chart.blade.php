@@ -55,7 +55,7 @@
         options = {
             chart: {
                 height: 350,
-                type: "line",
+                type: "area",
                 zoom: {
                     enabled: !1
                 }
@@ -69,7 +69,7 @@
                 enabled: !1
             },
             stroke: {
-                curve: "straight"
+                curve: "smooth"
             },
             title: {
                 text: "Context count for 9 day",
