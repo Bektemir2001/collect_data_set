@@ -107,3 +107,8 @@ Route::get('/failed-jobs', function (){
 Route::get('/failed-contents', function (){
     dd(DB::table('failed_contexts')->get());
 });
+
+Route::get('/extra/contexts', function (){
+    $contexts = \App\Models\Context::whereRaw('CHAR_LENGTH(context) < 200')->get();
+    dd($contexts);
+});
