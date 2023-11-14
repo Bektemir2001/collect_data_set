@@ -21,7 +21,7 @@ class Gpt4Service
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . env('GPT4_KEY'),
                 'Content-Type' => 'application/json',
-            ])->timeout(100)->post(env('GPT_ENDPOINT'), $data);
+            ])->timeout(200)->post(env('GPT_ENDPOINT'), $data);
             $responseData = $response->json();
             return ['data' => $responseData['choices'][0]['message']['content'], 'status_code' => 200];
         }

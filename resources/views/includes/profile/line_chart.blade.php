@@ -62,7 +62,7 @@
             },
             colors: ["#4788ff"],
             series: [{
-                name: "Desktops",
+                name: "Contexts",
                 data: context_counts
             }],
             dataLabels: {
