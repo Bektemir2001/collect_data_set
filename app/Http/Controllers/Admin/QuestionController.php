@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\QuestionRequest;
+use App\Http\Requests\QuestionStoreRequest;
 use App\Jobs\UploadMistralJob;
+use App\Models\QuestionAnswer;
 use App\Repositories\Admin\Collect_data\QuestionRepository;
 use App\Services\CsvService;
 use Illuminate\Http\Request;
@@ -63,5 +65,21 @@ class QuestionController extends Controller
         return response($csv->__toString(), 200, $headers);
     }
 
+    public function create()
+    {
+        return view('question.create');
+    }
+    public function edit(QuestionAnswer $questionAnswer)
+    {
+        return view('question.edit', compact('questionAnswer'));
+    }
+
+    public function store(QuestionStoreRequest $request)
+    {
+        $data = $request->validated();
+
+        $result = $this->questionRepository->store($data, auth()->user()->id, 'manual');
+        return back()->with(['notification' => $result['data']]);
+    }
 
 }

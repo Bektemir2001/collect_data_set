@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin\Collect_data;
 
 use App\Models\QuestionAnswer;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -45,6 +46,35 @@ class QuestionRepository
                 'context_id' => $context,
                 'type' => $type
             ]);
+        }
+    }
+
+    public function store(array $data, int $user, $type): array
+    {
+
+        try {
+            $data['created_by'] = $user;
+            $data['type'] = $type;
+            QuestionAnswer::create($data);
+            return ['data' => 'success', 'status_code' => 200];
+        }
+        catch (Exception $exception)
+        {
+            dd($exception->getMessage());
+            return ['data' => $exception->getMessage(), 'status_code' => 500];
+        }
+    }
+
+    public function update(QuestionAnswer $questionAnswer, array $data, int $user): array
+    {
+        try {
+            $data['updated_by'] = $user;
+            $questionAnswer->update($data);
+            return ['data' => 'success', 'status_code' => 200];
+        }
+        catch (Exception $exception)
+        {
+            return ['data' => $exception->getMessage(), 'status_code' => 500];
         }
     }
 

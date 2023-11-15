@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Context;
+use App\Models\QuestionAnswer;
 use App\Services\ProfileService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,8 +21,10 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $contexts = Context::where('created_by', auth()->user()->id)->paginate(100);
-        return view('admin.profile.index', compact('contexts'));
+        $user = auth()->user()->id;
+        $questions = QuestionAnswer::where('created_by', $user)->latest('created_at')->take(200)->get();
+        $contexts = Context::where('created_by', $user)->paginate(100);
+        return view('admin.profile.index', compact('contexts', 'questions'));
     }
 
     public function getDiagram()

@@ -115,6 +115,100 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">My questions</h4>
+                    </div>
+                    <div class="header-action">
+                        <i data-toggle="collapse" data-target="#datatable-1" aria-expanded="false">
+                            <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </i>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <div class="mb-4 mt-4">
+                            <a href="{{route('context.create')}}" class="btn btn-success">add</a>
+                        </div>
+                        <table id="datatable-2" class="table data-table table-striped table-bordered" >
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>question</th>
+                                <th>answer</th>
+                                <th class="text-right">actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableId">
+                            @foreach($questions as $question)
+                                <tr>
+                                    <td>{{$question->id}}</td>
+                                    <td>{{$question->question}}</td>
+                                    <td>{{ $question->answer}}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary">show</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>question</th>
+                                <th>answer</th>
+                                <th class="text-right">actions</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Create Question</h4>
+            </div>
+            <div class="header-action">
+                <i data-toggle="collapse" data-target="#form-element-6" aria-expanded="false" class="collapsed">
+                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                </i>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="collapse" id="form-element-6" style="">
+            </div>
+            <form action="{{route('question.manual.store')}}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="question">Question</label>
+                    <input type="text" class="form-control" id="question" placeholder="Enter Question" name="question" required autofocus>
+                    @error('question')
+                    <p class="text-danger">{{$message}}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="answer">Answer</label>
+                    <input type="text" class="form-control" id="answer" placeholder="Enter Answer" name="answer" required autofocus>
+                    @error('answer')
+                    <p class="text-danger">{{$message}}</p>
+                    @enderror
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            </form>
+        </div>
+    </div>
 @endsection
 @section('charts')
     @include('includes.profile.line_chart')
