@@ -82,7 +82,7 @@ class TextService
         {
             if($text[$i] == "\n")
             {
-                if(strlen($text_tmp) != 0)
+                if(strlen($text_tmp) != 0 && $text_tmp != "\r")
                 {
                     array_push($text_array, $text_tmp);
                     $text_tmp = '';

@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\QuestionRequest;
 use App\Http\Requests\QuestionStoreRequest;
 use App\Jobs\UploadMistralJob;
+use App\Models\Context;
 use App\Models\QuestionAnswer;
 use App\Repositories\Admin\Collect_data\QuestionRepository;
 use App\Services\CsvService;
+use App\Services\TextService;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
 
@@ -16,11 +18,13 @@ class QuestionController extends Controller
 {
     protected CsvService $csvService;
     protected QuestionRepository $questionRepository;
+    protected TextService $textService;
 
-    public function __construct(CsvService $csvService, QuestionRepository $questionRepository)
+    public function __construct(CsvService $csvService, QuestionRepository $questionRepository, TextService $textService)
     {
         $this->csvService = $csvService;
         $this->questionRepository = $questionRepository;
+        $this->textService = $textService;
     }
 
     public function index()
@@ -80,6 +84,18 @@ class QuestionController extends Controller
 
         $result = $this->questionRepository->store($data, auth()->user()->id, 'manual');
         return back()->with(['notification' => $result['data']]);
+    }
+
+    public function saveGeneratedQuestions(Request $request, Context $context)
+    {
+        $data = $request->validate(['generated_questions' => 'required']);
+        $result = $this->textService->forGpt4($data['generated_questions']);
+        if($result['status_code'] == 500)
+        {
+            dd($result['data']);
+        }
+        $this->questionRepository->saveQuestions($result['data'], $context->id, auth()->user()->id, 'manual');
+        return back()->with(['notification' => 'success']);
     }
 
 }

@@ -1,6 +1,7 @@
 @extends('layout.admin')
 @section('content')
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+
     <script>
         tinymce.init({
             selector: '#context',  // Задайте селектор для элемента, в котором вы хотите использовать редактор
@@ -47,13 +48,53 @@
                     @if($next_context)
                             <a type="submit" href="{{route('context.show', $next_context)}}" class="btn bg-success">Next</a>
                     @endif
-
+                        <button type="button" id="copyButton" data-clipboard-target="#textToCopy" class="btn btn-secondary">Copy Text</button>
 
 
                 </div>
+                <div id="textToCopy" style="display: none">{{"Generate questions and complete answers based on the following text in Kyrgyz language return 'Question:' 'Answer:'"}} <div></div> {!!$context->context !!}</div>
 
             </form>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Past generated questions</h4>
+                        </div>
+                        <div class="header-action">
+                            <i data-toggle="collapse" data-target="#form-quill-1" aria-expanded="false">
+                                <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                </svg>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <form action="{{route('question.save.generated', $context->id)}}" method="POST">
+                                @csrf
+                                <textarea style="width: 100%; height: 300px;" class="form-control" name="generated_questions"></textarea>
+                                <button type="submit" class="btn btn-primary mb-4 mt-4">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @include('includes.question_generate')
         </div>
     </div>
+    <script>
+        document.getElementById('copyButton').addEventListener('click', function () {
+            let textToCopy = document.getElementById('textToCopy');
+            let inputElement = document.createElement('input');
+            inputElement.value = textToCopy.textContent;
+            document.body.appendChild(inputElement);
+            inputElement.select();
+
+            document.execCommand('copy');
+            document.body.removeChild(inputElement);
+
+            alert('copied');
+        });
+    </script>
 @endsection

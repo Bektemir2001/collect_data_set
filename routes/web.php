@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
         Route::post('/manual/store', [QuestionController::class, 'store'])->name('question.manual.store');
         Route::post('/auto/generate', [QuestionAnswerController::class, 'autoGenerate'])->name('question.autogenerate');
         Route::post('/remove', [QuestionAnswerController::class, 'remove'])->name('question.remove');
+        Route::post('/save/generated/questions/{context}', [QuestionController::class, 'saveGeneratedQuestions'])->name('question.save.generated');
     });
 
     Route::group(['prefix' => 'csv'], function (){
