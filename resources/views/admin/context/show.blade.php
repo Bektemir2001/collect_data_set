@@ -94,7 +94,15 @@
             document.execCommand('copy');
             document.body.removeChild(inputElement);
 
-            alert('copied');
+            let className = document.getElementById('copyButton').className;
+            if(className === 'btn btn-secondary')
+            {
+                document.getElementById('copyButton').className = 'btn btn-primary'
+            }
+            else{
+                document.getElementById('copyButton').className = 'btn btn-secondary'
+            }
+
         });
     </script>
 @endsection
