@@ -13,7 +13,7 @@ class Gpt4Service
             'messages' => [
                 [
                     'role' => 'user',
-                    'content' => "Generate questions and complete answers based on the following text in Kyrgyz language return 'Question:' 'Answer:' \n"  . $context,
+                    'content' => "Generate questions and detailed answers based on the following text in Kyrgyz language return 'Question:' 'Answer:' \n"  . $context,
                 ],
             ],
         ];
