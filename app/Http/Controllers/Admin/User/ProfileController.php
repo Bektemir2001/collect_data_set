@@ -22,7 +22,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user()->id;
-        $questions = QuestionAnswer::where('created_by', $user)->latest('created_at')->take(200)->get();
+        $questions = QuestionAnswer::where('created_by', $user)->where('type', 'manual')->latest('created_at')->take(200)->get();
         $contexts = Context::where('created_by', $user)->paginate(100);
         return view('admin.profile.index', compact('contexts', 'questions'));
     }
