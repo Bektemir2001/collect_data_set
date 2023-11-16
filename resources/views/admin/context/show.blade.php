@@ -52,7 +52,7 @@
 
 
                 </div>
-                <div id="textToCopy" style="display: none">{{"Generate questions as much as possible and detailed answers based on the following text in Kyrgyz language return 'Question:' 'Answer:'"}} <div>{{$context->title != null ? $context->title : ""}}</div> {!!$context->context !!}</div>
+                <div id="textToCopy" style="display: none">{{"Generate questions as much as possible and detailed answers based on the following text in Kyrgyz language return 'Question:' 'Answer:'"}} <div>{{$context->title."." != null ? $context->title : ""}}</div> {!!$context->context !!}</div>
 
             </form>
             <div class="col-lg-12">
