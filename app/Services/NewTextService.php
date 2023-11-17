@@ -33,13 +33,6 @@ class NewTextService
         for ($i = 0; $i < strlen($text); $i++)
         {
             $word .= $text[$i];
-            if($i > 2)
-            {
-                if($text[$i] == "\n" && $text[$i - 1] == "\n")
-                {
-                    continue;
-                }
-            }
             if($this->is_starting_part($word))
             {
                 if(strlen($sentence))
