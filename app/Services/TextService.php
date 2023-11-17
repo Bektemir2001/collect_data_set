@@ -4,8 +4,8 @@ namespace App\Services;
 
 class TextService
 {
-    public const QUESTIONS = ['Question:', 'Суроо:', 'question:', 'суроо:', 'Вопрос:'];
-    public const ANSWERS = ['Answer:', 'Жооп:', 'answer:', 'жооп:', 'Ответ:'];
+    public const QUESTIONS = ['Question:', 'Суроо:', 'question:', 'суроо:', 'Вопрос:', 'вопрос:'];
+    public const ANSWERS = ['Answer:', 'Жооп:', 'answer:', 'жооп:', 'Ответ:', 'ответ:'];
     protected TranslateService $translateService;
     public function __construct(TranslateService $translateService)
     {
