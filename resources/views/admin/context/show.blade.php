@@ -40,7 +40,7 @@
 
                 <div class="mb-4 mt-4" style="margin-left: 60%">
                     @if($previous_context)
-                        <a type="submit" href="{{route('context.index', $previous_context)}}" class="btn bg-danger">Previous</a>
+                        <a type="submit" href="{{route('context.show', $previous_context)}}" class="btn bg-danger">Previous</a>
                     @endif
 
                         <button type="submit" class="btn btn-primary mr-2">Save changes</button>
