@@ -93,7 +93,7 @@ class QuestionController extends Controller
     public function saveGeneratedQuestions(Request $request, Context $context)
     {
         $data = $request->validate(['generated_questions' => 'required']);
-        $result = $this->textService->forGpt4($data['generated_questions']);
+        $result = $this->newTextService->forGpt4($data['generated_questions']);
         if($result['status_code'] == 500)
         {
             dd($result['data']);

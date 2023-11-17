@@ -42,7 +42,7 @@ class NewTextService
                 }
                 $word = '';
             }
-            elseif($text[$i] == " ")
+            elseif($text[$i] == " " || $text[$i] == "\n")
             {
                 $sentence .= $word;
                 $word = '';
