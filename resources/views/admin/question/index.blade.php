@@ -69,6 +69,7 @@
                                 <option value="translated_mistral">translated_mistral</option>
                                 <option value="gpt-4">gpt-4</option>
                                 <option value="gpt-4">gpt-3</option>
+                                <option value="manual">manual</option>
                             </select>
                         </div>
                         <button class="btn btn-primary" type="submit">Upload</button>
