@@ -10,6 +10,7 @@ use App\Models\Context;
 use App\Models\QuestionAnswer;
 use App\Repositories\Admin\Collect_data\QuestionRepository;
 use App\Services\CsvService;
+use App\Services\NewTextService;
 use App\Services\TextService;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
@@ -19,12 +20,15 @@ class QuestionController extends Controller
     protected CsvService $csvService;
     protected QuestionRepository $questionRepository;
     protected TextService $textService;
+    protected NewTextService $newTextService;
 
-    public function __construct(CsvService $csvService, QuestionRepository $questionRepository, TextService $textService)
+    public function __construct(CsvService $csvService, QuestionRepository $questionRepository,
+                                TextService $textService, NewTextService $newTextService)
     {
         $this->csvService = $csvService;
         $this->questionRepository = $questionRepository;
         $this->textService = $textService;
+        $this->newTextService = $newTextService;
     }
 
     public function index()
@@ -89,7 +93,7 @@ class QuestionController extends Controller
     public function saveGeneratedQuestions(Request $request, Context $context)
     {
         $data = $request->validate(['generated_questions' => 'required']);
-        $result = $this->textService->forGpt4($data['generated_questions']);
+        $result = $this->newTextService->forGpt4($data['generated_questions']);
         if($result['status_code'] == 500)
         {
             dd($result['data']);
