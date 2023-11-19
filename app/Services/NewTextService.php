@@ -48,6 +48,7 @@ class NewTextService
                 $word = '';
             }
         }
+        if (strlen($word)) $sentence .= $word;
         if(strlen($sentence)) $text_array[] = $sentence;
         return $text_array;
     }
