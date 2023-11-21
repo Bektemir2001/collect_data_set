@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TranslateController;
+use App\Models\Context;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/translate/alpaca', [TranslateController::class, 'alpaca']);
+
+Route::get('contexts/count', function (){
+
+    $contexts = Context::where('id', '>', 61833)
+        ->where('id', '>', 84208)
+        ->get();
+    $arr = [];
+    foreach ($contexts as $context)
+    {
+        if(strlen($context->context) > 4000) $arr[] = $context;
+    }
+
+    dd($arr);
+});
