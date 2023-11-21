@@ -56,6 +56,7 @@ class Gpt4Job implements ShouldQueue
             $j += 1;
             $context = Context::where('id', $i)->first();
             if(!$context) continue;
+            if(strlen($context->context) < 4000) continue;
             $text = $this->textService->cleanText($context->context);
             $title = $context->title;
             $text = $title . "\n".$text;
