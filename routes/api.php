@@ -26,7 +26,7 @@ Route::post('/translate/alpaca', [TranslateController::class, 'alpaca']);
 Route::get('contexts/count', function (){
 
     $contexts = Context::where('id', '>', 61833)
-        ->where('id', '>', 84208)
+        ->where('id', '<', 84208)
         ->get();
     $arr = [];
     foreach ($contexts as $context)
