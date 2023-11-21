@@ -31,7 +31,7 @@ Route::get('contexts/count', function (){
     $arr = [];
     foreach ($contexts as $context)
     {
-        if(strlen($context->context) > 4000) $arr[] = $context;
+        if(strlen($context->context) > 4000) $arr[] = $context->context;
     }
 
     dd($arr);
