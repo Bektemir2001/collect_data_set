@@ -54,6 +54,11 @@ class Gpt4Job implements ShouldQueue
         for($i = $this->context_start; $i <= $this->context_stop; $i++)
         {
             $j += 1;
+            if($i % 20 == 0)
+            {
+                $process->update(['present' => round(($j / $total) * 100, 2)]);
+                sleep(40);
+            }
             $context = Context::where('id', $i)->first();
             if(!$context) continue;
             if(strlen($context->context) < 4000) continue;
@@ -85,11 +90,6 @@ class Gpt4Job implements ShouldQueue
             $this->questionRepository->saveQuestions($gpt_result['data'], $context->id, $this->user, 'gpt-4');
 
             sleep(40);
-            if($i % 20 == 0)
-            {
-                $process->update(['present' => round(($j / $total) * 100, 2)]);
-                sleep(40);
-            }
         }
         $process->delete();
     }
