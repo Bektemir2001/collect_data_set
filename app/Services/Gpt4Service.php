@@ -17,6 +17,7 @@ class Gpt4Service
                 ],
             ],
         ];
+
         try{
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . env('GPT4_KEY'),

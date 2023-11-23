@@ -11,6 +11,7 @@ class GPT3Service
         $this->textService = $textService;
     }
 
+
     public function generateQuestionAndAnswer($text):array
     {
         $client = new Client();
