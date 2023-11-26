@@ -87,6 +87,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
 
     Route::get('/failed/contexts', [FailedContentsController::class, 'index'])->name('failed.context');
+    Route::get('/failed/contexts/delete/{failed_context_id}', [FailedContentsController::class, 'justDelete'])->name('failed.context.delete');
+    Route::post('/failed/contexts/save/question', [FailedContentsController::class, 'saveQuestionAndDeleteFailedContext'])->name('failed.context.save.question');
+
 });
 
 
