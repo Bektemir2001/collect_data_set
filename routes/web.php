@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\SQuid2Controller;
 use App\Http\Controllers\Admin\User\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FailedContentsController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -83,6 +84,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::post('/indexing', [IndexingController::class, 'make'])->name('indexing');
+
+
+    Route::get('/failed/contexts', [FailedContentsController::class, 'index'])->name('failed.context');
 });
 
 
