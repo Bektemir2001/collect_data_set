@@ -41,7 +41,7 @@ class FailedContentsController extends Controller
     }
     public function justDelete($failed_context_id)
     {
-        DB::table('failed_contexts')->where('id', '<', 134)->delete();
+        DB::table('failed_contexts')->where('id', '<', $failed_context_id)->delete();
         return back();
     }
 }
