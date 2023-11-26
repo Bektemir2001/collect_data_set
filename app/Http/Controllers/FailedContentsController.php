@@ -34,6 +34,7 @@ class FailedContentsController extends Controller
         );
 
         $questions = $this->textService->forGpt4($data['text']);
+        dd($questions);
         $user = auth()->user()->id;
         $this->questionRepository->saveQuestions($questions, $data['context_id'], $user, 'gpt-4');
         return back();
