@@ -36,6 +36,7 @@ class FailedContentsController extends Controller
         $questions = $this->textService->forGpt4($data['text']);
         $user = auth()->user()->id;
         $this->questionRepository->saveQuestions($questions['data'], $data['context_id'], $user, 'gpt-4');
+        DB::table('failed_contexts')->where('id', '=', $data['failed_context_id'])->delete();
         return back();
 
     }
