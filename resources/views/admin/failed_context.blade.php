@@ -19,10 +19,11 @@
                 <div>
                     <form action="{{route('failed.context.save.question')}}" method="POST">
                         @csrf
-                        <textarea style="width: 100%; height: 300px;" class="form-control" name="generated_questions">{{$context->error}}</textarea>
-                        <input class="form-control" value="{{$context->id}}">
-                        <input class="form-control" value="{{$context->context_id}}">
+                        <textarea style="width: 100%; height: 300px;" class="form-control" name="text">{{$context->error}}</textarea>
+                        <input class="form-control" value="{{$context->id}}" name="failed_context_id">
+                        <input class="form-control" value="{{$context->context_id}}" name="context_id">
                         <button type="submit" class="btn btn-primary mb-4 mt-4">Submit</button>
+                        <a href="{{route('failed.context.delete', $context->id)}}" class="btn btn-primary mb-4 mt-4">Delete</a>
                     </form>
                 </div>
             </div>
