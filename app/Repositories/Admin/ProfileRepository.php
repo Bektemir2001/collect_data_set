@@ -10,10 +10,10 @@ class ProfileRepository
 {
     public function getDiagramData() : Collection
     {
-        return DB::table('contexts')
-            ->join('users', 'users.id', '=', 'contexts.created_by')
-            ->select(DB::raw('COUNT(contexts.id) as context_count'), 'users.name')
-            ->where('contexts.lang', '=', null)
+        return DB::table('question_answers as q')
+            ->join('users', 'users.id', '=', 'q.created_by')
+            ->select(DB::raw('COUNT(q.id) as context_count'), 'users.name')
+            ->where('q.type', '=', 'amount')
             ->groupBy('users.id')
             ->get();
     }
