@@ -91,7 +91,8 @@ class CsvImportAndTranslateJob implements ShouldQueue
                         'original_question' => $record['question'],
                         'original_answer' => $record['answers'],
                         'created_by' => $this->user,
-                        'lang' => $this->source_lang
+                        'lang' => $this->source_lang,
+                        'type' => "orca"
                     ]
                 );
             }
