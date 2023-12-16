@@ -56,12 +56,12 @@ class TranslateContextController extends Controller
                     ->limit(10);
                 $results = $statement->process($csv);
                 $headers = $results->getHeader();
-                if(in_array('context', $headers) && in_array('question', $headers) && in_array('answers', $headers))
+                if(in_array('context', $headers) && in_array('question', $headers) && in_array('answer', $headers))
                 {
                     CsvImportAndTranslateJob::dispatch(storage_path('app/public/' . $path), $delimiter, auth()->user()->id, $data['source_lang']);
                     return redirect()->route('context.translate.index')->with(['notification' => 'Данные успешно импортируется.']);
                 }
-                return redirect()->route('context.translate.index')->with(['notification' => 'CSV файл должен содержать поля "context" , "question" и "answers".']);
+                return redirect()->route('context.translate.index')->with(['notification' => 'CSV файл должен содержать поля "context" , "question" и "answer".']);
             } else {
                 return redirect()->route('context.translate.index')->with(['notification' => "Не удалось определить разделитель в CSV файле."]);
             }
