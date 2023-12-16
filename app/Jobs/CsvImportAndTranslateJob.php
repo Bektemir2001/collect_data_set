@@ -51,7 +51,7 @@ class CsvImportAndTranslateJob implements ShouldQueue
         $translator = new TranslateService();
         $context = null;
         foreach ($results as $record) {
-            if (!isset($record['context']) || !isset($record['question']) || !isset($record['answers'])) {
+            if (!isset($record['context']) || !isset($record['question']) || !isset($record['answer'])) {
                 continue;
             }
             if($record['context'] != $last_context || $context == null){
@@ -74,14 +74,15 @@ class CsvImportAndTranslateJob implements ShouldQueue
             }
 
             $question = $translator->translate($record['question'], $this->source_lang, $this->target_lang)['result'];
+            $answer = $translator->translate($record['answer'], $this->source_lang, $this->target_lang)['result'];
 
-            $jsonString = str_replace("'", "\"", $record['answers']);
-            $answers = json_decode($jsonString);
-            if(!isset($answers->text)) continue;
-            $answers = $answers->text;
-            for($j = 0; $j < count($answers); $j++)
-            {
-                $answer = $translator->translate($answers[$j], $this->source_lang, $this->target_lang)['result'];
+//            $jsonString = str_replace("'", "\"", $record['answers']);
+//            $answers = json_decode($jsonString);
+//            if(!isset($answers->text)) continue;
+//            $answers = $answers->text;
+//            for($j = 0; $j < count($answers); $j++)
+//            {
+//                $answer = $translator->translate($answers[$j], $this->source_lang, $this->target_lang)['result'];
                 if($answer == null) continue;
                 QuestionAnswer::create(
                     [
@@ -89,14 +90,14 @@ class CsvImportAndTranslateJob implements ShouldQueue
                         'question' => $question,
                         'answer' => $answer,
                         'original_question' => $record['question'],
-                        'original_answer' => $record['answers'],
+                        'original_answer' => $record['answer'],
                         'created_by' => $this->user,
                         'lang' => $this->source_lang,
                         'type' => "orca"
                     ]
                 );
-            }
-            if($i % 9 == 0){
+//            }
+            if($i % 10 == 0){
                 sleep(1);
             }
             $i += 1;
