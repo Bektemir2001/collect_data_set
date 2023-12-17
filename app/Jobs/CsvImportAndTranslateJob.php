@@ -61,7 +61,7 @@ class CsvImportAndTranslateJob implements ShouldQueue
                     $title = $translator->translate($record['title'], $this->source_lang, $this->target_lang)['result'];
                     $original_title = $record['title'];
                 }
-                $translated_context = $translator->translate($record['context'], $this->source_lang, $this->target_lang)['result'];
+                $translated_context = $record['context'];
                 $context = Context::create([
                     'title' => $title,
                     'context' => $translated_context,
