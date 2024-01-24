@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Http;
 
 class CommonCrawlController extends Controller
 {
-    public function index()
+    public function index($list=null)
     {
         $urls = DB::table('crawl_urls')
             ->select('host_name', 'list_name', DB::raw('count(*) as url_count'))
             ->where('user_id', auth()->user()->id)
+            ->where('list_name', $list)
             ->groupBy('host_name', 'list_name')
             ->get();
         return view('admin.crawl.index', compact('urls'));
@@ -28,12 +29,14 @@ class CommonCrawlController extends Controller
             ->select('host_name')
             ->where('user_id', auth()->user()->id)
             ->where('host_name', '>', $host_name)
+            ->where('list_name', null)
             ->orderBy('host_name')
             ->first();
         $previousHostName = DB::table('crawl_urls')
             ->select('host_name')
             ->where('user_id', auth()->user()->id)
             ->where('host_name', '<', $host_name)
+            ->where('list_name', null)
             ->orderByDesc('host_name')
             ->first();
         $urls = CrawlUrls::where('host_name', $host_name)
