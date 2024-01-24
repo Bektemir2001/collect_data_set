@@ -130,8 +130,8 @@
                     return response.text();
                 })
                 .then(data => {
-                    document.getElementById('urlsCountId').innerHTML = 'urls count = ' + toString(urls.length);
-                    document.getElementById('currentUrlId').innerHTML = 'current url index = ' + toString(current_index);
+                    document.getElementById('urlsCountId').innerHTML = 'urls count = ' + urls.length;
+                    document.getElementById('currentUrlId').innerHTML = 'current url index = ' + current_index;
                     document.getElementById('urlId').innerHTML = urls[current_index]
                     document.getElementById('external-content-container').innerHTML = data;
                 })
