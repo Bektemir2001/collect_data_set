@@ -7,8 +7,10 @@
             border: 1px solid #ccc; /* Просто для визуализации контейнера */
         }
 
-        #external-content-container * {
-            max-width: 100%; /* Это ограничит ширину вложенных элементов до ширины контейнера */
+        #external-content-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Убираем границы iframe */
         }
     </style>
     <div class="row">
