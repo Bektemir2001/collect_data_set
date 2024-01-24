@@ -52,8 +52,7 @@ class CommonCrawlController extends Controller
         try {
             $response = Http::get($url);
             $content = $response->body();
-            $cleanedContent = preg_replace('/<[^>]*(href|src)=["\']([^"\']*)["\'][^>]*>/', '', $content);
-            return response($cleanedContent);
+            return response($content);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
