@@ -35,8 +35,9 @@
         <h4 id="urlsCountId"></h4>
         <h4 id="currentUrlId"></h4>
         <h4 id="urlId"></h4>
-        <div id="external-content-container">
-        </div>
+{{--        <div id="external-content-container">--}}
+{{--        </div>--}}
+        <iframe id="external-iframe" frameborder="0" scrolling="auto" height="600px" width="100%"></iframe>
         <div>
             <button class="btn btn-secondary" onclick="previous()">previous url</button>
             <button class="btn btn-primary" onclick="next()">next url</button>
@@ -132,10 +133,12 @@
                     return response.text();
                 })
                 .then(data => {
+                    var iframe = document.getElementById('external-iframe');
                     document.getElementById('urlsCountId').innerHTML = 'urls count = ' + urls.length;
                     document.getElementById('currentUrlId').innerHTML = 'current url index = ' + current_index;
                     document.getElementById('urlId').innerHTML = urls[current_index]
-                    document.getElementById('external-content-container').innerHTML = data;
+                    iframe.contentDocument.write(data);
+                    // document.getElementById('external-content-container').innerHTML = data;
                 })
                 .catch(error => {
                     alert('Ошибка при загрузке контента:', error);
