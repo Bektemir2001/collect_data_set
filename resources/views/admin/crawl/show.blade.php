@@ -30,6 +30,8 @@
         </div>
     </div>
     <div class="container">
+        <h4 id="urlsCountId"></h4>
+        <h4 id="currentUrlId"></h4>
         <h4 id="urlId"></h4>
         <div id="external-content-container">
         </div>
@@ -128,11 +130,13 @@
                     return response.text();
                 })
                 .then(data => {
+                    document.getElementById('urlsCountId').innerHTML = 'urls count = ' + toString(urls.length);
+                    document.getElementById('currentUrlId').innerHTML = 'current url index = ' + toString(current_index);
                     document.getElementById('urlId').innerHTML = urls[current_index]
                     document.getElementById('external-content-container').innerHTML = data;
                 })
                 .catch(error => {
-                    console.error('Ошибка при загрузке контента:', error);
+                    alert('Ошибка при загрузке контента:', error);
                 });
 
         }
