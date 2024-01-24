@@ -119,6 +119,9 @@
             let data = new FormData();
             data.append('url', urls[current_index]);
             data.append('host_name', "{{$host_name}}");
+            document.getElementById('urlsCountId').innerHTML = 'urls count = ' + urls.length;
+            document.getElementById('currentUrlId').innerHTML = 'current url index = ' + current_index;
+            document.getElementById('urlId').innerHTML = urls[current_index]
             fetch("{{route('crawl.get.site.content')}}", {
                 method: 'POST',
                 headers: {
@@ -134,9 +137,6 @@
                 })
                 .then(data => {
                     var iframe = document.getElementById('external-iframe');
-                    document.getElementById('urlsCountId').innerHTML = 'urls count = ' + urls.length;
-                    document.getElementById('currentUrlId').innerHTML = 'current url index = ' + current_index;
-                    document.getElementById('urlId').innerHTML = urls[current_index]
                     iframe.contentDocument.write(data);
                     // document.getElementById('external-content-container').innerHTML = data;
                 })
