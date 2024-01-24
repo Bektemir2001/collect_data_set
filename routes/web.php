@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CollectData\IndexingController;
 use App\Http\Controllers\Admin\CollectData\QuestionAnswerController;
 use App\Http\Controllers\Admin\CollectData\Translate\TranslateContextController;
 use App\Http\Controllers\Admin\CollectData\UploadController;
+use App\Http\Controllers\Admin\CommonCrawlController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Gpt4Controller;
 use App\Http\Controllers\Admin\IndexController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FailedContentsController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -89,6 +91,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     Route::get('/failed/contexts', [FailedContentsController::class, 'index'])->name('failed.context');
     Route::get('/failed/contexts/delete/{failed_context_id}', [FailedContentsController::class, 'justDelete'])->name('failed.context.delete');
     Route::post('/failed/contexts/save/question', [FailedContentsController::class, 'saveQuestionAndDeleteFailedContext'])->name('failed.context.save.question');
+
+    Route::group(['prefix' => 'commncrawl'], function (){
+        Route::get('/', [CommonCrawlController::class, 'index'])->name('crawl.index');
+        Route::post('/show', [CommonCrawlController::class, 'show'])->name('crawl.show');
+        Route::post('/black/list', [CommonCrawlController::class, 'blackList'])->name('crawl.black.list');
+        Route::post('/white/list', [CommonCrawlController::class, 'whiteList'])->name('crawl.white.list');
+        Route::post('/get/siteContent', [CommonCrawlController::class, 'getSiteContent'])->name('crawl.get.site.content');
+    });
 
 });
 
