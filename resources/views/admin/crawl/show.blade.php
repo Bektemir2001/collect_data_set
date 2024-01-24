@@ -137,6 +137,7 @@
                 })
                 .then(data => {
                     var iframe = document.getElementById('external-iframe');
+                    iframe.contentDocument.body.innerHTML = '';
                     iframe.contentDocument.write(data);
                     // document.getElementById('external-content-container').innerHTML = data;
                 })
